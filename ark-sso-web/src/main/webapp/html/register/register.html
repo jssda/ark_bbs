@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <title>方舟论坛注册</title>
+    <link rel="icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../js/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../../css/public.css" media="all"/>
+    <link rel="stylesheet" href="../../css/register.css">
+    <script type="text/javascript" src="../../js/layui/layui.js"></script>
+    <script type="text/javascript" src="../../js/register.js"></script>
+</head>
+<body class="backgroundBody">
+
+<div class="registerPanel">
+    <form action="" class="layui-form">
+        <!--    注册图标    -->
+        <div class="register_face"><img src="../../img/ARKface.png" class="userAvatar"></div>
+
+        <!--     用户名   -->
+        <div class="layui-form-item input-item">
+            <label for="userName">用户名</label>
+            <input type="text" name="userName" id="userName" lay-verify="username|required" autocomplete="off"
+                   placeholder="请输入用户名"
+                   class="layui-input">
+        </div>
+        <!--    密码    -->
+        <div class="layui-form-item input-item">
+            <label for="password">密码</label>
+            <input type="password" name="password" id="password" lay-verify="pass|required" autocomplete="off"
+                   placeholder="请输入密码"
+                   class="layui-input">
+        </div>
+        <div class="layui-form-item input-item">
+            <label for="password2">确认密码</label>
+            <input type="password" id="password2" lay-verify="pass|required" autocomplete="off" placeholder="请确认密码"
+                   class="layui-input">
+        </div>
+        <!--Email-->
+        <div class="layui-form-item input-item">
+            <label for="email">邮箱</label>
+            <input type="text" id="email" name="email" lay-verify="email|required" autocomplete="off"
+                   placeholder="请输入您的邮箱"
+                   class="layui-input">
+        </div>
+
+        <!--    手机号码    -->
+        <div class="layui-form-item input-item">
+            <label for="phone">手机号码</label>
+            <input type="text" id="phone" name="phone" lay-verify="phone|required" autocomplete="off"
+                   placeholder="请输入您的手机号码"
+                   class="layui-input">
+            <button class="layui-btn-sm layui-btn-primary layui-layout-right" id="codeTip" type="button">
+                点此发送验证码
+            </button>
+        </div>
+
+        <div class="layui-form-item input-item">
+            <label for="code">手机验证码</label>
+            <input type="text" id="code" name="code" lay-verify="number|required" autocomplete="off"
+                   placeholder="请输入手机验证码"
+                   class="layui-input">
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn layui-block" lay-filter="login" lay-submit>注册</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

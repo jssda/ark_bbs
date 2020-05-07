@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>板块添加</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../../css/public.css" media="all"/>
+</head>
+<body class="childrenBody">
+<form class="layui-form layui-row layui-col-space10">
+    <div class="layui-col-md8">
+
+        <div class="layui-hide layui-form-item">
+            <input type="text" id="secId" name="secId" class="layui-input">
+        </div>
+
+        <input id="userId" value="-1" class="layui-hide"/>
+        <input id="userName" value="-1" class="layui-hide"/>
+
+        <div class="layui-row layui-col-space10">
+            <div class=" layui-form-item magt3">
+                <label class="layui-form-label">版主</label>
+                <div id="secUserName" class="layui-input-inline secUserName"></div>
+            </div>
+        </div>
+        <div class="layui-form-item magb0">
+            <label class="layui-form-label">板块内容</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea layui-hide" name="secTitle" lay-verify="content"
+                          id="secTitle"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-right magt30">
+            <a class="layui-btn layui-btn-sm" lay-filter="addSection" lay-submit>
+                <i class="layui-icon">&#xe609;</i>提交</a>
+        </div>
+    </div>
+</form>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="sectionAdd.js"></script>
+<script type="text/javascript" src="../../js/xm-select.js"></script>
+</body>
+</html>

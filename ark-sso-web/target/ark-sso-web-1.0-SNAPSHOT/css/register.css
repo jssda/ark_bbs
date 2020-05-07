@@ -1,0 +1,161 @@
+/*动画过度效果*/
+.layui-form-item.layui-input-focus label {
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+}
+
+.layui-input-focus .layui-input::-webkit-input-placeholder {
+    transition: color 0.2s linear 0.2s;
+    -webkit-transition: color 0.2s linear 0.2s;
+}
+
+.layui-input-focus .layui-input::-moz-placeholder {
+    transition: color 0.2s linear 0.2s;
+}
+
+.layui-input-focus .layui-input:-ms-input-placeholder {
+    transition: color 0.2s linear 0.2s;
+}
+
+.layui-input-focus .layui-input::placeholder {
+    transition: color 0.2s linear 0.2s;
+    -webkit-transition: color 0.2s linear 0.2s;
+}
+
+
+
+.backgroundBody {
+    height: 100%;
+    background: url("../img/bg.jpg") no-repeat;
+    background-size: cover;
+}
+
+.registerPanel {
+    color: black;
+    /*height: 500px;*/
+    width: 400px;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+/*表单提示框作用*/
+.layui-form {
+    background-color: #fff;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 50px #009688;
+}
+
+.register_face {
+    margin: -80px auto 20px;
+    width: 100px;
+    height: 100px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 2px solid #ededed;
+    overflow: hidden;
+    box-shadow: 0 0 30px #009688;
+}
+
+.register_face img{
+    width: 100%;
+}
+
+
+.layui-form-item {
+    position: relative;
+}
+
+.layui-form-item label {
+    position: absolute;
+    color: #757575;
+    left: 10px;
+    top: 9px;
+    line-height: 20px;
+    background: #fff;
+    padding: 0 5px;
+    font-size: 14px;
+    cursor: text;
+}
+
+.layui-form-item.layui-input-focus label {
+    top: -10px;
+    font-size: 12px;
+    color: #ff6700;
+}
+
+.layui-form-item.layui-input-active label {
+    top: -10px;
+    font-size: 12px;
+}
+
+.layui-input::-webkit-input-placeholder {
+    color: #fff;
+}
+
+.layui-input::-moz-placeholder {
+    color: #fff;
+}
+
+.layui-input:-ms-input-placeholder {
+    color: #fff;
+}
+
+.layui-input::placeholder {
+    color: #fff;
+}
+
+.layui-input-inline::-webkit-input-placeholder {
+    color: #fff;
+}
+
+.layui-input-inline::-moz-placeholder {
+    color: #fff;
+}
+
+.layui-input-inline:-ms-input-placeholder {
+    color: #fff;
+}
+
+.layui-input-inline::placeholder {
+    color: #fff;
+}
+
+.layui-form-item.layui-input-focus input {
+    border-color: #ff6700 !important;
+}
+
+.layui-input-focus .layui-input::-webkit-input-placeholder {
+    color: #757575;
+}
+
+.layui-input-focus .layui-input-inline::-webkit-input-placeholder {
+    color: #757575;
+}
+
+.layui-input-focus .layui-input::-moz-placeholder {
+    color: #757575;
+}
+
+.layui-input-focus .layui-input-inline::-moz-placeholder {
+    color: #757575;
+}
+
+
+.layui-input-focus .layui-input:-ms-input-placeholder,.layui-input-focus .layui-input-inline:-ms-input-placeholder {
+    color: #757575;
+}
+
+.layui-input-focus .layui-input::placeholder,.layui-input-focus .layui-input-inline::placeholder {
+    color: #757575;
+}
+
+#codeTip{
+    position: relative;
+    top: 4px;
+}

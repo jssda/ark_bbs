@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.jssd.ark.rpc.mapper.TFollowMapper">
+  <resultMap id="BaseResultMap" type="pers.jssd.ark.rpc.pojo.TFollow">
+    <id column="follow_id" jdbcType="INTEGER" property="followId" />
+    <result column="follow_user_id" jdbcType="INTEGER" property="followUserId" />
+    <result column="followed_num" jdbcType="INTEGER" property="followedNum" />
+    <result column="followr_num" jdbcType="INTEGER" property="followrNum" />
+    <result column="create" jdbcType="TIMESTAMP" property="create" />
+    <result column="update" jdbcType="TIMESTAMP" property="update" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="pers.jssd.ark.rpc.pojo.TFollow">
+    <result column="follow_user" jdbcType="LONGVARCHAR" property="followUser" />
+    <result column="followr" jdbcType="LONGVARCHAR" property="followr" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    follow_id, follow_user_id, followed_num, followr_num, `create`, `update`
+  </sql>
+  <sql id="Blob_Column_List">
+    follow_user, followr
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="pers.jssd.ark.rpc.pojo.TFollowExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_follow
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="pers.jssd.ark.rpc.pojo.TFollowExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_follow
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_follow
+    where follow_id = #{followId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_follow
+    where follow_id = #{followId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.jssd.ark.rpc.pojo.TFollowExample">
+    delete from t_follow
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.jssd.ark.rpc.pojo.TFollow">
+    <selectKey keyProperty="followId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_follow (follow_user_id, followed_num, followr_num, 
+      `create`, `update`, follow_user, 
+      followr)
+    values (#{followUserId,jdbcType=INTEGER}, #{followedNum,jdbcType=INTEGER}, #{followrNum,jdbcType=INTEGER}, 
+      #{create,jdbcType=TIMESTAMP}, #{update,jdbcType=TIMESTAMP}, #{followUser,jdbcType=LONGVARCHAR}, 
+      #{followr,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.jssd.ark.rpc.pojo.TFollow">
+    <selectKey keyProperty="followId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_follow
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="followUserId != null">
+        follow_user_id,
+      </if>
+      <if test="followedNum != null">
+        followed_num,
+      </if>
+      <if test="followrNum != null">
+        followr_num,
+      </if>
+      <if test="create != null">
+        `create`,
+      </if>
+      <if test="update != null">
+        `update`,
+      </if>
+      <if test="followUser != null">
+        follow_user,
+      </if>
+      <if test="followr != null">
+        followr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="followUserId != null">
+        #{followUserId,jdbcType=INTEGER},
+      </if>
+      <if test="followedNum != null">
+        #{followedNum,jdbcType=INTEGER},
+      </if>
+      <if test="followrNum != null">
+        #{followrNum,jdbcType=INTEGER},
+      </if>
+      <if test="create != null">
+        #{create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update != null">
+        #{update,jdbcType=TIMESTAMP},
+      </if>
+      <if test="followUser != null">
+        #{followUser,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="followr != null">
+        #{followr,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.jssd.ark.rpc.pojo.TFollowExample" resultType="java.lang.Long">
+    select count(*) from t_follow
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_follow
+    <set>
+      <if test="record.followId != null">
+        follow_id = #{record.followId,jdbcType=INTEGER},
+      </if>
+      <if test="record.followUserId != null">
+        follow_user_id = #{record.followUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.followedNum != null">
+        followed_num = #{record.followedNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.followrNum != null">
+        followr_num = #{record.followrNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.create != null">
+        `create` = #{record.create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.update != null">
+        `update` = #{record.update,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.followUser != null">
+        follow_user = #{record.followUser,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.followr != null">
+        followr = #{record.followr,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update t_follow
+    set follow_id = #{record.followId,jdbcType=INTEGER},
+      follow_user_id = #{record.followUserId,jdbcType=INTEGER},
+      followed_num = #{record.followedNum,jdbcType=INTEGER},
+      followr_num = #{record.followrNum,jdbcType=INTEGER},
+      `create` = #{record.create,jdbcType=TIMESTAMP},
+      `update` = #{record.update,jdbcType=TIMESTAMP},
+      follow_user = #{record.followUser,jdbcType=LONGVARCHAR},
+      followr = #{record.followr,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_follow
+    set follow_id = #{record.followId,jdbcType=INTEGER},
+      follow_user_id = #{record.followUserId,jdbcType=INTEGER},
+      followed_num = #{record.followedNum,jdbcType=INTEGER},
+      followr_num = #{record.followrNum,jdbcType=INTEGER},
+      `create` = #{record.create,jdbcType=TIMESTAMP},
+      `update` = #{record.update,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.jssd.ark.rpc.pojo.TFollow">
+    update t_follow
+    <set>
+      <if test="followUserId != null">
+        follow_user_id = #{followUserId,jdbcType=INTEGER},
+      </if>
+      <if test="followedNum != null">
+        followed_num = #{followedNum,jdbcType=INTEGER},
+      </if>
+      <if test="followrNum != null">
+        followr_num = #{followrNum,jdbcType=INTEGER},
+      </if>
+      <if test="create != null">
+        `create` = #{create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update != null">
+        `update` = #{update,jdbcType=TIMESTAMP},
+      </if>
+      <if test="followUser != null">
+        follow_user = #{followUser,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="followr != null">
+        followr = #{followr,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where follow_id = #{followId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="pers.jssd.ark.rpc.pojo.TFollow">
+    update t_follow
+    set follow_user_id = #{followUserId,jdbcType=INTEGER},
+      followed_num = #{followedNum,jdbcType=INTEGER},
+      followr_num = #{followrNum,jdbcType=INTEGER},
+      `create` = #{create,jdbcType=TIMESTAMP},
+      `update` = #{update,jdbcType=TIMESTAMP},
+      follow_user = #{followUser,jdbcType=LONGVARCHAR},
+      followr = #{followr,jdbcType=LONGVARCHAR}
+    where follow_id = #{followId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.jssd.ark.rpc.pojo.TFollow">
+    update t_follow
+    set follow_user_id = #{followUserId,jdbcType=INTEGER},
+      followed_num = #{followedNum,jdbcType=INTEGER},
+      followr_num = #{followrNum,jdbcType=INTEGER},
+      `create` = #{create,jdbcType=TIMESTAMP},
+      `update` = #{update,jdbcType=TIMESTAMP}
+    where follow_id = #{followId,jdbcType=INTEGER}
+  </update>
+</mapper>

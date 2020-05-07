@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.jssd.ark.rpc.mapper.TCommentMultiMapper">
+  <resultMap id="BaseResultMap" type="pers.jssd.ark.rpc.pojo.TCommentMulti">
+    <id column="com_mul_id" jdbcType="INTEGER" property="comMulId" />
+    <result column="com_mul_content" jdbcType="VARCHAR" property="comMulContent" />
+    <result column="com_mul_comment_id" jdbcType="INTEGER" property="comMulCommentId" />
+    <result column="replay_id" jdbcType="INTEGER" property="replayId" />
+    <result column="reply_type" jdbcType="CHAR" property="replyType" />
+    <result column="comment_mul_user_id" jdbcType="INTEGER" property="commentMulUserId" />
+    <result column="target_id" jdbcType="INTEGER" property="targetId" />
+    <result column="create" jdbcType="TIMESTAMP" property="create" />
+    <result column="update" jdbcType="TIMESTAMP" property="update" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    com_mul_id, com_mul_content, com_mul_comment_id, replay_id, reply_type, comment_mul_user_id, 
+    target_id, `create`, `update`
+  </sql>
+  <select id="selectByExample" parameterType="pers.jssd.ark.rpc.pojo.TCommentMultiExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_comment_multi
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_comment_multi
+    where com_mul_id = #{comMulId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_comment_multi
+    where com_mul_id = #{comMulId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.jssd.ark.rpc.pojo.TCommentMultiExample">
+    delete from t_comment_multi
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.jssd.ark.rpc.pojo.TCommentMulti">
+    <selectKey keyProperty="comMulId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_comment_multi (com_mul_content, com_mul_comment_id, replay_id, 
+      reply_type, comment_mul_user_id, target_id, 
+      `create`, `update`)
+    values (#{comMulContent,jdbcType=VARCHAR}, #{comMulCommentId,jdbcType=INTEGER}, #{replayId,jdbcType=INTEGER}, 
+      #{replyType,jdbcType=CHAR}, #{commentMulUserId,jdbcType=INTEGER}, #{targetId,jdbcType=INTEGER}, 
+      #{create,jdbcType=TIMESTAMP}, #{update,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.jssd.ark.rpc.pojo.TCommentMulti">
+    <selectKey keyProperty="comMulId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_comment_multi
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="comMulContent != null">
+        com_mul_content,
+      </if>
+      <if test="comMulCommentId != null">
+        com_mul_comment_id,
+      </if>
+      <if test="replayId != null">
+        replay_id,
+      </if>
+      <if test="replyType != null">
+        reply_type,
+      </if>
+      <if test="commentMulUserId != null">
+        comment_mul_user_id,
+      </if>
+      <if test="targetId != null">
+        target_id,
+      </if>
+      <if test="create != null">
+        `create`,
+      </if>
+      <if test="update != null">
+        `update`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="comMulContent != null">
+        #{comMulContent,jdbcType=VARCHAR},
+      </if>
+      <if test="comMulCommentId != null">
+        #{comMulCommentId,jdbcType=INTEGER},
+      </if>
+      <if test="replayId != null">
+        #{replayId,jdbcType=INTEGER},
+      </if>
+      <if test="replyType != null">
+        #{replyType,jdbcType=CHAR},
+      </if>
+      <if test="commentMulUserId != null">
+        #{commentMulUserId,jdbcType=INTEGER},
+      </if>
+      <if test="targetId != null">
+        #{targetId,jdbcType=INTEGER},
+      </if>
+      <if test="create != null">
+        #{create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update != null">
+        #{update,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.jssd.ark.rpc.pojo.TCommentMultiExample" resultType="java.lang.Long">
+    select count(*) from t_comment_multi
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_comment_multi
+    <set>
+      <if test="record.comMulId != null">
+        com_mul_id = #{record.comMulId,jdbcType=INTEGER},
+      </if>
+      <if test="record.comMulContent != null">
+        com_mul_content = #{record.comMulContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comMulCommentId != null">
+        com_mul_comment_id = #{record.comMulCommentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.replayId != null">
+        replay_id = #{record.replayId,jdbcType=INTEGER},
+      </if>
+      <if test="record.replyType != null">
+        reply_type = #{record.replyType,jdbcType=CHAR},
+      </if>
+      <if test="record.commentMulUserId != null">
+        comment_mul_user_id = #{record.commentMulUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.targetId != null">
+        target_id = #{record.targetId,jdbcType=INTEGER},
+      </if>
+      <if test="record.create != null">
+        `create` = #{record.create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.update != null">
+        `update` = #{record.update,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_comment_multi
+    set com_mul_id = #{record.comMulId,jdbcType=INTEGER},
+      com_mul_content = #{record.comMulContent,jdbcType=VARCHAR},
+      com_mul_comment_id = #{record.comMulCommentId,jdbcType=INTEGER},
+      replay_id = #{record.replayId,jdbcType=INTEGER},
+      reply_type = #{record.replyType,jdbcType=CHAR},
+      comment_mul_user_id = #{record.commentMulUserId,jdbcType=INTEGER},
+      target_id = #{record.targetId,jdbcType=INTEGER},
+      `create` = #{record.create,jdbcType=TIMESTAMP},
+      `update` = #{record.update,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.jssd.ark.rpc.pojo.TCommentMulti">
+    update t_comment_multi
+    <set>
+      <if test="comMulContent != null">
+        com_mul_content = #{comMulContent,jdbcType=VARCHAR},
+      </if>
+      <if test="comMulCommentId != null">
+        com_mul_comment_id = #{comMulCommentId,jdbcType=INTEGER},
+      </if>
+      <if test="replayId != null">
+        replay_id = #{replayId,jdbcType=INTEGER},
+      </if>
+      <if test="replyType != null">
+        reply_type = #{replyType,jdbcType=CHAR},
+      </if>
+      <if test="commentMulUserId != null">
+        comment_mul_user_id = #{commentMulUserId,jdbcType=INTEGER},
+      </if>
+      <if test="targetId != null">
+        target_id = #{targetId,jdbcType=INTEGER},
+      </if>
+      <if test="create != null">
+        `create` = #{create,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update != null">
+        `update` = #{update,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where com_mul_id = #{comMulId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.jssd.ark.rpc.pojo.TCommentMulti">
+    update t_comment_multi
+    set com_mul_content = #{comMulContent,jdbcType=VARCHAR},
+      com_mul_comment_id = #{comMulCommentId,jdbcType=INTEGER},
+      replay_id = #{replayId,jdbcType=INTEGER},
+      reply_type = #{replyType,jdbcType=CHAR},
+      comment_mul_user_id = #{commentMulUserId,jdbcType=INTEGER},
+      target_id = #{targetId,jdbcType=INTEGER},
+      `create` = #{create,jdbcType=TIMESTAMP},
+      `update` = #{update,jdbcType=TIMESTAMP}
+    where com_mul_id = #{comMulId,jdbcType=INTEGER}
+  </update>
+</mapper>

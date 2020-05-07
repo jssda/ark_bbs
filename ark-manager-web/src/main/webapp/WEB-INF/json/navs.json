@@ -1,0 +1,73 @@
+{
+	"contentManagement": [
+		{
+			"title": "文章列表",
+			"icon": "icon-text",
+			"href": "page/news/newsList.html",
+			"spread": false
+		},
+		{
+			"title": "板块管理",
+			"icon": "icon-text",
+			"href": "page/section/sectionList.html",
+			"spread": false
+		},
+		{
+			"title": "图片管理",
+			"icon": "&#xe634;",
+			"href": "page/img/images.html",
+			"spread": false
+		},
+		{
+			"title": "其他页面",
+			"icon": "&#xe630;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "404页面",
+					"icon": "&#xe61c;",
+					"href": "page/404.html",
+					"spread": false
+				},
+				{
+					"title": "登录",
+					"icon": "&#xe609;",
+					"href": "page/login/login.html",
+					"spread": false,
+					"target": "_blank"
+				}
+			]
+		}
+	],
+	"memberCenter": [
+		{
+			"title": "用户中心",
+			"icon": "&#xe612;",
+			"href": "page/user/userList2.html",
+			"spread": false
+		},
+		{
+			"title": "收藏管理",
+			"icon": "&#xe612;",
+			"href": "page/collection/collectionList.html",
+			"spread": false
+		}
+	],
+	"commentManagement": [
+		{
+			"title": "一级评论列表",
+			"icon": "icon-text",
+			"href": "page/comment/commentList.html",
+			"spread": false
+		},
+		{
+			"title": "多级评论列表",
+			"icon": "icon-text",
+			"href": "page/comment/commentMultiList.html",
+			"spread": false
+		}
+	]
+}
+
+

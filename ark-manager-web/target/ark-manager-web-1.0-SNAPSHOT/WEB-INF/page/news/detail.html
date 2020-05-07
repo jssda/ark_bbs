@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Fly Template v3.0，基于 layui 的极简社区页面模版</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="fly,layui,前端社区">
+    <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/global.css">
+</head>
+<body>
+
+<div class="layui-container">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8 content detail">
+            <div id="articleView"></div>
+            <div id="commentView"></div>
+        </div>
+        <!--左半部分的展示信息-->
+        <div class="layui-col-md4">
+            <!--用户信息展示-->
+            <div id="artUserView"></div>
+
+            <!--文章类型展示-->
+            <div id="artTypeView"></div>
+
+            <dl class="fly-panel fly-list-one">
+                <dt class="fly-panel-title">讨论火热</dt>
+                <!-- 无数据时 -->
+                <div class="fly-none">没有相关数据</div>
+            </dl>
+
+            <div class="fly-panel">
+                <div class="fly-panel-title">
+                    这里可作为广告区域
+                </div>
+                <div class="fly-panel-main">
+                    <a href="http://layim.layui.com/?from=fly" target="_blank" class="fly-zanzhu"
+                       time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">LayIM 3.0 - layui 旗舰之作</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--文章标题和内容模板-->
+<script id="articleTpl" type="text/html">
+    <div class="fly-panel detail-box">
+        <h1>{{ d.artTitle }}</h1>
+        <!--文章的一些热度, 多少评论 多少点赞量信息 -->
+        <div class="fly-detail-info">
+            {{# if(d.isTop == 1) { }}
+            <span class="layui-badge layui-bg-black">置顶</span>
+            {{# }}}
+            {{ d.create == null ? "" : '<span class="layui-badge">文章发布于: ' + d.create + '</span>' }}
+            <span class="fly-list-nums">
+                <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i> 评论数量 </a>
+                <i class="iconfont" title="人气">&#xe60b;</i> {{ d.artLikeNum }}
+            </span>
+        </div>
+
+        <!--这里是文章的内容信息-->
+        <div class="detail-body photos">
+            {{d.artContent}}
+        </div>
+    </div>
+</script>
+
+<!--回帖信息模板-->
+<script id="commentTpl" type="text/html">
+    <!--回帖信息-->
+    <div class="fly-panel detail-box" id="flyReply">
+        <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
+            <legend>评论信息</legend>
+        </fieldset>
+        <ul class="jieda" id="jieda">
+            {{# layui.each(d, function(index, item){ }}
+            <li data-id="111">
+                <a name="item-1111111111"></a>
+                <div class="detail-about detail-about-reply">
+                    <a class="fly-avatar" href="">
+                        <img src="{{ item.user.userImg == null ? '' : item.user.userImg}}"
+                             alt="{{ item.user.userName }}">
+                    </a>
+                    <div class="fly-detail-user">
+                        <a href="" class="fly-link">
+                            <cite>{{ item.user.userName }}</cite>
+                        </a>
+                    </div>
+                    <div class="detail-hits">
+                        <span>{{ item.create }}</span>
+                    </div>
+                </div>
+                <div class="detail-body jieda-body photos">
+                    <p>{{ item.comContent }}</p>
+                </div>
+                <div class="jieda-reply">
+                    <span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>
+                    <div class="jieda-admin">
+                        <span type="del">删除</span>
+                    </div>
+                </div>
+            </li>
+            {{# }); }}
+
+            <!-- 无数据时 -->
+            {{# if(d.length === 0){ }}
+            <li class="fly-none">消灭零回复</li>
+            {{# } }}
+        </ul>
+    </div>
+</script>
+
+<!--用户信息展示模板-->
+<script id="artUserTpl" type="text/html">
+    <div class="fly-panel">
+        <div class="fly-panel-title">用户信息</div>
+        <div class="fly-panel-main">
+            <!--文章的用户信息-->
+            <div class="detail-about">
+                <a class="fly-avatar" href="查看用户详情">
+                    <img src="{{ d.userImg }}"
+                         alt="{{ d.userName }}">
+                </a>
+                <div class="fly-detail-user">
+                    <a href="查看用户详情" class="fly-link">
+                        <cite>{{ d.userName }}</cite>
+                    </a>
+                    <span>{{ d.create }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script id="artTypeTpl" type="text/html">
+    <div class="fly-panel">
+        <div class="fly-panel-title">分类信息</div>
+        <div class="fly-panel-main">
+            <div class="layui-btn-container tag">
+                {{# layui.each(d, function(index, item){ }}
+                <button type="button" class="tag-item" lay-id=" {{ item.typeId }} ">{{ item.typeName }}</button>
+                {{# }); }}
+
+                <!-- 无数据时 -->
+                {{# if(d.length === 0){ }}
+                <li class="fly-none">并没有什么标签</li>
+                {{# } }}
+            </div>
+        </div>
+    </div>
+</script>
+
+<script src="../../layui/layui.js"></script>
+<script src="newsList.js"></script>
+</body>
+</html>

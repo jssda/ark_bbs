@@ -1,0 +1,11 @@
+pers\jssd\ark\rpc\mapper\TMessageLogMapper.class
+pers\jssd\ark\rpc\mapper\TFollowMapper.class
+pers\jssd\ark\rpc\mapper\TCollectionMapper.class
+pers\jssd\ark\rpc\mapper\TUserInfoMapper.class
+pers\jssd\ark\rpc\mapper\TArtTypeArtMapper.class
+pers\jssd\ark\rpc\mapper\TArticleTypeMapper.class
+pers\jssd\ark\rpc\mapper\TSectionMapper.class
+pers\jssd\ark\rpc\mapper\TCommentMultiMapper.class
+pers\jssd\ark\rpc\mapper\TCommentMapper.class
+pers\jssd\ark\rpc\mapper\TArticleMapper.class
+pers\jssd\ark\rpc\mapper\TMessageMapper.class

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo 
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <!-- 添加服务提供者的标志 -->
+    <!--suppress UnparsedCustomBeanInspection -->
+    <dubbo:application name="ark-rpc-provider"/>
+
+    <!-- 指定注册中心 -->
+    <!--suppress UnparsedCustomBeanInspection -->
+    <dubbo:registry address="192.168.18.203:2181,192.168.18.203:2182,192.168.18.203:2183" protocol="zookeeper"/>
+
+    <!-- 指定当前项目发布dubbo服务的方式 -->
+    <!-- 指定服务发布的协议：dubbo协议 -->
+    <!-- 指定服务发布的端口：10000 -->
+    <!--suppress UnparsedCustomBeanInspection -->
+    <dubbo:protocol name="dubbo" port="20000"/>
+
+    <!--Dubbo发布的服务-->
+    <dubbo:service interface="pers.jssd.ark.rpc.service.TUserInfoService" ref="TUserInfoServiceImpl"/>
+    <dubbo:service interface="pers.jssd.ark.rpc.service.TArticleService" ref="TArticleServiceImpl"/>
+    <dubbo:service interface="pers.jssd.ark.rpc.service.TCommentService" ref="TCommentServiceImpl"/>
+    <dubbo:service interface="pers.jssd.ark.rpc.service.TSectionService" ref="TSectionServiceImpl"/>
+    <dubbo:service interface="pers.jssd.ark.rpc.service.TCollectionService" ref="TCollectionServiceImpl"/>
+</beans>

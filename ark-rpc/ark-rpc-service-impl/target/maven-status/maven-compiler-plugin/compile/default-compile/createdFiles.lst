@@ -1,0 +1,5 @@
+pers\jssd\ark\rpc\service\impl\TSectionServiceImpl.class
+pers\jssd\ark\rpc\service\impl\TUserInfoServiceImpl.class
+pers\jssd\ark\rpc\service\impl\TArticleServiceImpl.class
+pers\jssd\ark\rpc\service\impl\TCollectionServiceImpl.class
+pers\jssd\ark\rpc\service\impl\TCommentServiceImpl.class

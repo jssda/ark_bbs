@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>文章列表--layui后台管理模板 2.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../../css/public.css" media="all"/>
+</head>
+<body class="childrenBody">
+<form class="layui-form layui-row layui-col-space10">
+    <div class="layui-hide layui-form-item">
+        <input type="text" id="artId" name="artId" class="layui-input">
+    </div>
+
+    <input id="userId" class="layui-hide" value="-1">
+    <input id="userName" class="layui-hide" value="-1">
+
+    <input id="secId" class="layui-hide" value="-1"/>
+    <input id="secTitle" class="layui-hide" value="-1"/>
+
+    <div class="layui-col-md9 layui-col-xs12">
+        <div class="layui-row layui-col-space10">
+            <div class="layui-form-item magt3">
+                <label class="layui-form-label">文章标题</label>
+                <div class="layui-input-block ">
+                    <input type="text" name="artTitle" class="layui-input newsName" lay-verify="newsName"
+                           placeholder="请输入文章标题">
+                </div>
+            </div>
+
+            <div class=" layui-form-item magt3">
+                <label class="layui-form-label">文章作者</label>
+                <div id="artUserName" class="layui-input-inline artUserName"></div>
+            </div>
+
+            <div class=" layui-form-item magt3">
+                <label class="layui-form-label">所属板块</label>
+                <div id="artSection" class="layui-input-inline artSection"></div>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item magb0">
+            <label class="layui-form-label">文章内容</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea layui-hide" name="artContent" lay-verify="content"
+                          id="news_content"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md3 layui-col-xs12">
+        <blockquote class="layui-elem-quote title"><i class="seraph icon-caidan"></i> 分类标签</blockquote>
+        <div class="layui-btn-container layui-form-item tag magt20 tagType" lay-filter="tagType" lay-allowclose="true"
+             lay-newTag="true"></div>
+
+        <blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 状态</blockquote>
+        <div class="border">
+            <div class="layui-form-item">
+                <label class="layui-form-label"><i class="layui-icon">&#xe60e;</i> 热度</label>
+                <div class="layui-input-inline">
+                    <input type="number" class="layui-input" id="artHotNum" name="artHotNum" required
+                           lay-verify="number" placeholder="文章的热度" autocomplete="off">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><i class="layui-icon">&#xe60e;</i>点赞量</label>
+                <div class="layui-input-inline">
+                    <input type="number" class="layui-input" id="artLikeNum" name="artLikeNum" required
+                           lay-verify="number" placeholder="文章的点赞量" autocomplete="off"></div>
+            </div>
+
+            <div class="layui-form-item newsTop">
+                <label class="layui-form-label"><i class="seraph icon-zhiding"></i> 置　顶</label>
+                <div class="layui-input-block isTop">
+                    <input type="checkbox" name="isTop" value="1" lay-skin="switch" lay-text="是|否">
+                </div>
+            </div>
+        </div>
+        <hr class="layui-bg-gray"/>
+        <div class="layui-right">
+            <a class="layui-btn layui-btn-sm" lay-filter="addNews" lay-submit><i
+                    class="layui-icon">&#xe609;</i>发布</a>
+            <a class="layui-btn layui-btn-primary layui-btn-sm" lay-filter="look" lay-submit>预览</a>
+        </div>
+    </div>
+</form>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="newsAdd.js"></script>
+<script type="text/javascript" src="../../js/xm-select.js"></script>
+</body>
+</html>

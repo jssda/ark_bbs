@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多级评论列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../../css/public.css" media="all"/>
+
+</head>
+<body class="childrenBody">
+<form class="layui-form">
+    <blockquote class="layui-elem-quote quoteBox">
+        <form class="layui-form">
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input searchUserVal" placeholder="请输入发布者id"/>
+                </div>
+                <a class="layui-btn search_btn_user" data-type="reload">搜索发布者id</a>
+            </div>
+            <div class="layui-block">
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input searchParentVal" placeholder="请输入上一级评论id"/>
+                </div>
+                <a class="layui-btn search_btn_parent" data-type="reload">搜索一级评论id</a>
+            </div>
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-normal addComMulti_btn">添加多级评论</a>
+            </div>
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">批量删除</a>
+            </div>
+        </form>
+    </blockquote>
+    <table id="commentMultiList" lay-filter="commentMultiList"></table>
+
+    <!--操作-->
+    <script type="text/html" id="commentMultiListBar">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+    </script>
+
+</form>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="commentMultiList.js"></script>
+<script type="text/javascript" src="../../js/xm-select.js"></script>
+</body>
+</html>
