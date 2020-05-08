@@ -39,23 +39,32 @@ layui.config({
                 })
             }
 
-            // 查询此文章的评论
-            $.ajax({
-                url: "http://localhost:8081/portal/index/listCommentByPageNumAndArtId",
-                data: {artId: data.artId, page: 1, limit: 5},
-                async: false,
-                success: function (res) {
-                    if (res.code === -1) {
-                        top.layer.msg(res.msg);
-                    } else {
-                        let commentHtml = $("#commentTpl").html();
-                        let commentView = $("#commentView");
-                        laytpl(commentHtml).render(res.data, function (html) {
-                            commentView.html(html);
-                        })
-                    }
+            // 流加载
+            flow.load({
+                elem: "#commentView" /*指定列表容器*/,
+                isAuto: false,
+                done: function (page, next) { //到达临界点（默认滚动触发），触发下一页
+                    var lis = [];
+
+                    // 查询此文章的评论
+                    $.ajax({
+                        url: "http://localhost:8081/portal/index/listCommentByPageNumAndArtId",
+                        data: {artId: data.artId, page: page, limit: 4},
+                        async: false,
+                        success: function (res) {
+                            if (res.code === -1) {
+                                top.layer.msg(res.msg);
+                            } else {
+                                let commentHtml = $("#commentTpl").html();
+                                laytpl(commentHtml).render(res.data, function (html) {
+                                    lis.push(html);
+                                })
+                                next(lis.join(''), page < (res.count / 5));
+                            }
+                        }
+                    })
                 }
-            })
+            });
 
             // 加载文章用户信息
             var user = data.user;
@@ -80,6 +89,18 @@ layui.config({
             });
         }
     })
+
+    //创建一个编辑器
+    var editIndex = layedit.build('commentContent', {
+        height: 200,
+        uploadImage: {
+            url: "http://localhost:8081/portal/pic/upload"
+        }
+    });
+    // 创建编辑器的时候, 将textArera中的数据同步到编辑器中, 以追加方式添加
+    layedit.setContent(editIndex, $("#commentContent").text(), true);
+    //用于同步编辑器内容到textarea
+    layedit.sync(editIndex);
 
     //展开多级评论信息
     $("span[name=unfoldCommentMulti]").click(function () {
@@ -144,7 +165,7 @@ layui.config({
         $("input[name=comId]").val(comId);
         $("#clearTips").removeClass("layui-hide");
     });
-
+    // 清除回复对象
     $(document).on("click", "#clearTips", function () {
         $("#targetUserName").text("");
         $("input[name=targetId]").val("");
@@ -157,14 +178,17 @@ layui.config({
         // 取得评论的文章id
         let artId = $("#artId").text();
 
-        data.field.artId=artId;
+        data.field.artId = artId;
+        // 富文本编辑器中的内容
+        data.field.content = layedit.getContent(editIndex).split('<audio controls="controls" style="display: none;"></audio>')[0];
 
-        console.log(data.field);
         $.ajax({
             url: "http://localhost:8081/portal/index/addComment",
-            data:data.field,
+            type: "POST",
+            data: data.field,
             success: function (res) {
                 layer.msg(res.msg);
+                location.reload();
             },
             complete: function (xhr, ts) {
                 if ((xhr.status >= 300 && xhr.status < 400) && xhr.status != 304) {
@@ -175,7 +199,6 @@ layui.config({
                 }
             }
         })
-
 
         return false;
     })

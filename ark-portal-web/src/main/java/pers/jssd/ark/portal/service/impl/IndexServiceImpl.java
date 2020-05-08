@@ -8,10 +8,7 @@ import pers.jssd.ark.beans.PageNum;
 import pers.jssd.ark.beans.PageResult;
 import pers.jssd.ark.portal.service.IndexService;
 import pers.jssd.ark.rpc.pojo.*;
-import pers.jssd.ark.rpc.service.TArticleService;
-import pers.jssd.ark.rpc.service.TCommentService;
-import pers.jssd.ark.rpc.service.TSectionService;
-import pers.jssd.ark.rpc.service.TUserInfoService;
+import pers.jssd.ark.rpc.service.*;
 import pers.jssd.ark.util.PageUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,13 +25,15 @@ public class IndexServiceImpl implements IndexService {
     private final TArticleService articleService;
     private final TUserInfoService userInfoService;
     private final TCommentService commentService;
+    private final TMessageService messageService;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    public IndexServiceImpl(TSectionService sectionService, TArticleService articleService, TUserInfoService userInfoService, TCommentService commentService) {
+    public IndexServiceImpl(TSectionService sectionService, TArticleService articleService, TUserInfoService userInfoService, TCommentService commentService, TMessageService messageService) {
         this.sectionService = sectionService;
         this.articleService = articleService;
         this.userInfoService = userInfoService;
         this.commentService = commentService;
+        this.messageService = messageService;
     }
 
     @Override
@@ -189,6 +188,7 @@ public class IndexServiceImpl implements IndexService {
 
         int i = 0;
         try {
+            Integer toUserId = null;
             // 查看是不是对文章的评论信息
             if (StringUtils.isEmpty(replyType)) {
                 TComment comment = new TComment();
@@ -197,6 +197,9 @@ public class IndexServiceImpl implements IndexService {
                 comment.setComUserId(loginUser.getUserId());
                 comment.setCreate(new Date());
 
+                TArticle article = articleService.selectArticleByArtId(Integer.valueOf(artId));
+                toUserId = article.getArtUserId();
+
                 i = commentService.addComment(comment);
             } else { // 多级评论信息
                 TCommentMulti commentMulti = new TCommentMulti();
@@ -204,6 +207,7 @@ public class IndexServiceImpl implements IndexService {
                 Integer comId = Integer.valueOf(request.getParameter("comId"));
                 Integer replayId = Integer.valueOf(request.getParameter("replayId"));
                 Integer targetId = Integer.valueOf(request.getParameter("targetId"));
+                toUserId = targetId;
 
                 commentMulti.setComMulContent(content);
                 commentMulti.setComMulCommentId(comId);
@@ -213,19 +217,51 @@ public class IndexServiceImpl implements IndexService {
                 commentMulti.setTargetId(targetId);
                 commentMulti.setCreate(new Date());
 
-                commentService.addCommentMulti(commentMulti);
+                i = commentService.addCommentMulti(commentMulti);
             }
-        } catch (NumberFormatException e) {
+            if (i > 0) {
+                // 添加一条消息
+                TMessage message = new TMessage();
+                message.setMesTitle("评论信息");
+                message.setMesContent("有人对你回复了");
+                message.setFromUserId(loginUser.getUserId());
+                message.setToUserId(toUserId);
+                message.setMesType("0");
+                message.setMesState("0");
+                message.setCreate(new Date());
+
+                int messageInsertCount = messageService.insertMessage(message);
+                if (messageInsertCount < 1) {
+                    return new ArkResult(-1, "评论失败");
+                }
+            } else {
+                return new ArkResult(-1, "评论失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             return new ArkResult(-1, "评论失败");
         }
 
-        if (i > 0) {
-            // 添加一条消息
+        return new ArkResult(200, "评论成功");
+    }
 
-
+    @Override
+    public PageResult listArticleByUserIdAndPageNum(Integer userId, Integer page, Integer limit) {
+        PageResult pageResult = null;
+        PageNum pageNum = PageUtil.getPageNum(page, limit);
+        PageInfo<TArticle> articlePageInfo = articleService.selectArticleByPageNumAndUserId(pageNum, userId);
+        if (articlePageInfo == null || articlePageInfo.getSize() == 0) {
+            pageResult = new PageResult();
+            pageResult.setCode(-1);
+            pageResult.setMsg("没有发布的贴子");
         } else {
-            return new ArkResult(-1, "评论失败");
+            pageResult = new PageResult();
+            pageResult.setCode(200);
+            pageResult.setData(articlePageInfo.getList());
+            pageResult.setCount((int) articlePageInfo.getTotal());
+            pageResult.setSize(articlePageInfo.getSize());
+            pageResult.setMsg("查询成功");
         }
-        return null;
+        return pageResult;
     }
 }

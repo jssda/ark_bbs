@@ -129,7 +129,7 @@ public class TCommentServiceImpl implements TCommentService {
 
         TCommentMultiExample commentMultiExample = new TCommentMultiExample();
         TCommentMultiExample.Criteria commentMultiExampleCriteria = commentMultiExample.createCriteria();
-        commentMultiExampleCriteria.andReplayIdEqualTo(commentId);
+        commentMultiExampleCriteria.andComMulCommentIdEqualTo(commentId);
         // 按照时间排序
         commentMultiExample.setOrderByClause("`create`  asc");
 

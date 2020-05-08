@@ -79,4 +79,8 @@ public interface TArticleService {
      */
     int deleteArticle(Integer artId);
 
+    /**
+     * 通过用户id, 分页查询文章信息, 时间倒叙排序
+     */
+    PageInfo<TArticle> selectArticleByPageNumAndUserId(PageNum pageNum, Integer userId);
 }

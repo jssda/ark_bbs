@@ -70,27 +70,4 @@ layui.config({
         }
     });
 
-
-/*
-    // 加载用户数据, 查看用户是否登录, 如果用户登录, 将用户信息缓存到浏览器
-    let token = layui.data("token").token;
-    if (token == null) {
-        token = '';
-    }
-    $.ajax({
-        url: "http://localhost:8083/sso/checkUserByToken",
-        data: {
-            token: token
-        },
-        success: function (res) {
-            layer.msg(res.msg);
-            let data = {};
-            data.user = res.data;
-            let tpl = $("#userInfoTpl").html();
-            laytpl(tpl).render(data, function (html) {
-                $(".fly-nav-user").html(html);
-            });
-        }
-    });*/
-
 });

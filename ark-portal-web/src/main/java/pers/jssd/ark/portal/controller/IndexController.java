@@ -110,4 +110,12 @@ public class IndexController {
     public ArkResult addComment(HttpServletRequest request) {
         return indexService.addComment(request);
     }
+
+    /**
+     * 查询用户近期发布的帖子
+     */
+    @RequestMapping("listArticleByUserIdAndPageNum")
+    public PageResult listArticleByUserIdAndPageNum(Integer userId, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "5") Integer limit) {
+        return indexService.listArticleByUserIdAndPageNum(userId, page, limit);
+    }
 }

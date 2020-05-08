@@ -1,5 +1,7 @@
 package pers.jssd.ark.rpc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,8 +20,10 @@ public class TMessage implements Serializable {
 
     private String mesState;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date create;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date update;
 
     private static final long serialVersionUID = 1L;

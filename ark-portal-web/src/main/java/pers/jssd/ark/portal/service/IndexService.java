@@ -64,4 +64,9 @@ public interface IndexService {
      * @param request 请求对象
      */
     ArkResult addComment(HttpServletRequest request);
+
+    /**
+     * 查询用户近期发布的帖子
+     */
+    PageResult listArticleByUserIdAndPageNum(Integer userId, Integer page, Integer limit);
 }

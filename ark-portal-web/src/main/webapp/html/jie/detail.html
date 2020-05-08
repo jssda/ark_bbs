@@ -12,66 +12,6 @@
 </head>
 <body>
 
-<!--<div class="fly-header layui-bg-black">
-    <div class="layui-container">
-        <a class="fly-logo" href="/">
-            <img src="../../res/images/logo.png" alt="layui">
-        </a>
-        <ul class="layui-nav fly-nav layui-hide-xs">
-            <li class="layui-nav-item layui-this">
-                <a href="/"><i class="iconfont icon-jiaoliu"></i>交流</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="../case/case.html"><i class="iconfont icon-iconmingxinganli"></i>案例</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>框架</a>
-            </li>
-        </ul>
-
-        <ul class="layui-nav fly-nav-user">
-
-            &lt;!&ndash; 未登入的状态 &ndash;&gt;
-            &lt;!&ndash;
-            <li class="layui-nav-item">
-              <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>
-            </li>
-            <li class="layui-nav-item">
-              <a href="user/login.html">登入</a>
-            </li>
-            <li class="layui-nav-item">
-              <a href="user/reg.html">注册</a>
-            </li>
-            <li class="layui-nav-item layui-hide-xs">
-              <a href="/app/qq/" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" title="QQ登入" class="iconfont icon-qq"></a>
-            </li>
-            <li class="layui-nav-item layui-hide-xs">
-              <a href="/app/weibo/" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" title="微博登入" class="iconfont icon-weibo"></a>
-            </li>
-             &ndash;&gt;
-
-            &lt;!&ndash; 登入后的状态 &ndash;&gt;
-            <li class="layui-nav-item">
-                <a class="fly-nav-avatar" href="javascript:;">
-                    <cite class="layui-hide-xs">贤心</cite>
-                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
-                    <i class="layui-badge fly-badge-vip layui-hide-xs">VIP3</i>
-                    <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                    <dd><a href="../user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
-                    </dd>
-                    <dd><a href="../user/home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
-                    </dd>
-                    <hr style="margin: 5px 0;">
-                    <dd><a href="" style="text-align: center;">退出</a></dd>
-                </dl>
-            </li>
-        </ul>
-    </div>
-</div>-->
-
 <div id="header"></div>
 
 <div class="layui-hide-xs">
@@ -89,9 +29,9 @@
 
                 <!-- 用户登入后显示 -->
                 <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                        href="../user/index.html">我发表的贴</a></li>
+                        href="../user/collection.html">我发表的贴</a></li>
                 <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                        href="../user/index.html#collection">我收藏的贴</a></li>
+                        href="../user/collection.html#collection">我收藏的贴</a></li>
             </ul>
 
             <div class="fly-column-right layui-hide-xs">
@@ -109,12 +49,19 @@
 <div class="layui-container">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md8 content detail">
-            <div id="articleView"></div>
-            <div id="commentView"></div>
+            <div id="articleView"></div>    <!--回帖信息-->
+            <!--评论信息-->
+            <div class="fly-panel detail-box" id="flyReply">
+                <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
+                    <legend>评论信息</legend>
+                </fieldset>
+                <ul class="jieda" id="jieda">
+                    <div id="commentView"></div>
+                </ul>
+            </div>
 
-            <div class="layui-form layui-form-pane">
-                <form action="http://localhost:8081/index/addComment" method="post">
-
+            <div class="layui-form-pane">
+                <form method="post" class="layui-form" lay-filter="submitComment">
                     <span id="targetUserName"></span>
                     <button id="clearTips" type="button" class="layui-btn-sm layui-hide">清除</button>
                     <!--回复用户id-->
@@ -134,11 +81,15 @@
                         <input type="hidden" name="replyType">
                     </div>
 
-                    <div class="layui-form-item layui-form-text">
+                    <div class="layui-form-item layui-form-text" style="background-color: white">
                         <div class="layui-input-block">
+                            <textarea class="layui-textarea layui-hide" name="content" lay-verify="content"
+                                      id="commentContent"></textarea>
+                        </div>
+                        <!--<div class="layui-input-block">
                             <textarea id="L_content" name="content" required lay-verify="required" placeholder="请输入内容"
                                       class="layui-textarea fly-editor" style="height: 150px;"></textarea>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="layui-form-item">
                         <button class="layui-btn" lay-filter="submitComment" lay-submit>提交回复</button>
@@ -209,51 +160,40 @@
 </script>
 <!--回帖信息模板-->
 <script id="commentTpl" type="text/html">
-    <!--回帖信息-->
-    <div class="fly-panel detail-box" id="flyReply">
-        <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
-            <legend>评论信息</legend>
-        </fieldset>
-        <ul class="jieda" id="jieda">
-            {{# layui.each(d, function(index, item){ }}
-            <li data-id="{{ item.comId }}" name="commentItem">
-                <div class="detail-about detail-about-reply">
-                    <a class="fly-avatar" href="">
-                        <img src="{{ item.user.userImg == null ? '' : item.user.userImg}}"
-                             alt="{{ item.user.userName }}">
+    <div id="commentFlow">
+        {{# layui.each(d, function(index, item){ }}
+        <li data-id="{{ item.comId }}" name="commentItem">
+            <div class="detail-about detail-about-reply">
+                <a class="fly-avatar" href="">
+                    <img src="{{ item.user.userImg == null ? '' : item.user.userImg}}"
+                         alt="{{ item.user.userName }}">
+                </a>
+                <div class="fly-detail-user">
+                    <a type="userId" user-id="{{ item.user.userId }}"></a>
+
+                    <a href="" class="fly-link">
+                        <cite>{{ item.user.userName }}</cite>
                     </a>
-                    <div class="fly-detail-user">
-                        <a type="userId" user-id="{{ item.user.userId }}"></a>
-
-                        <a href="" class="fly-link">
-                            <cite>{{ item.user.userName }}</cite>
-                        </a>
-                    </div>
-                    <div class="detail-hits">
-                        <span>{{ item.create }}</span>
-                    </div>
                 </div>
-                <div class="detail-body jieda-body photos">
-                    <p>{{ item.comContent }}</p>
+                <div class="detail-hits">
+                    <span>{{ item.create }}</span>
                 </div>
-                <div class="jieda-reply">
-                    <span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>
-                    <div class="jieda-admin">
-                        <span type="del">删除</span>
-                    </div>
-                    <span name="unfoldCommentMulti">点击查看回复内容</span>
+            </div>
+            <div class="detail-body jieda-body photos">
+                <p>{{ item.comContent }}</p>
+            </div>
+            <div class="jieda-reply">
+                <span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>
+                <div class="jieda-admin">
+                    <span type="del">删除</span>
                 </div>
-                <ul class="jieda">
-                    <div name="commentMultiDiv" class="commentMultiDiv"></div>
-                </ul>
-            </li>
-            {{# }); }}
-
-            <!-- 无数据时 -->
-            {{# if(d.length === 0){ }}
-            <li class="fly-none">消灭零回复</li>
-            {{# } }}
-        </ul>
+                <span name="unfoldCommentMulti">点击查看回复内容</span>
+            </div>
+            <ul class="jieda">
+                <div name="commentMultiDiv" class="commentMultiDiv"></div>
+            </ul>
+        </li>
+        {{# }); }}
     </div>
 </script>
 <!--用户信息展示模板-->

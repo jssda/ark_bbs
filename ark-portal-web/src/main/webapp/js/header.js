@@ -21,9 +21,6 @@ layui.use(['layer', 'laytpl', 'cookie', 'jquery', 'element'], function () {
                     data: {
                         token: token
                     },
-                    /*xhrFields: {
-                        withCredentials: true // 这里设置了withCredentials
-                    },*/
                     success: function (res) {
                         layer.msg(res.msg);
                         if (res.data != null) {
@@ -39,6 +36,8 @@ layui.use(['layer', 'laytpl', 'cookie', 'jquery', 'element'], function () {
                     }
                 });
             }
+        } else {
+            layui.data("userInfo", null);
         }
         // 没有令牌的话, 直接没有登录, 需要登录
         let tpl = $("#userInfoTpl").html();

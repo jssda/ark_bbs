@@ -1,4 +1,7 @@
-pers\jssd\ark\portal\interceptor\LoginInterceptor.class
+pers\jssd\ark\portal\controller\PicController.class
 pers\jssd\ark\portal\service\IndexService.class
 pers\jssd\ark\portal\service\impl\IndexServiceImpl.class
+pers\jssd\ark\portal\service\PortalPicService.class
 pers\jssd\ark\portal\controller\IndexController.class
+pers\jssd\ark\portal\interceptor\LoginInterceptor.class
+pers\jssd\ark\portal\service\impl\PortalPicServiceImpl.class
