@@ -1,12 +1,3 @@
-layui.cache.page = 'jie';
-layui.cache.user = {
-    username: '测试'
-    , uid: -1
-    , avatar: '../res/images/avatar/00.jpg'
-    , experience: 83
-    , sex: '男'
-};
-
 layui.config({
     version: "3.0.0"
     , base: 'http://localhost:8081/res/mods/'
@@ -26,6 +17,10 @@ layui.config({
         tag = layui.tag,
         flow = layui.flow,
         fly = layui.fly;
+
+    //加载公共页面资源
+    $("#header").load("http://localhost:8081/html/common/header.html");
+    // $("#footer").load("http://localhost:8081/html/common/footer.html");
 
     // 初始化文章信息
     $.ajax({
@@ -131,10 +126,22 @@ layui.config({
         let targetUserId = item.find("a[type=userId]").attr("user-id");
         let targetComId = item.attr("data-id");
 
+        // 查看回复的是一级评论还是二级评论
+        let comId;
+        if ("commentMultiDiv" === item.parent().attr("class")) {
+            // 假如回复的是多级评论, 取得一级评论id
+            comId = item.parents("li[name=commentItem]").attr("data-id");
+            $("input[name=replyType]").val(1);
+        } else {
+            comId = targetComId;
+            $("input[name=replyType]").val(0);
+        }
+
         $("#L_content").focus();
         $("#targetUserName").text("@" + targetUserName + ":");
         $("input[name=targetId]").val(targetUserId);
         $("input[name=replayId]").val(targetComId);
+        $("input[name=comId]").val(comId);
         $("#clearTips").removeClass("layui-hide");
     });
 
@@ -147,10 +154,17 @@ layui.config({
 
     // 评论提交
     form.on('submit(submitComment)', function (data) {
+        // 取得评论的文章id
+        let artId = $("#artId").text();
+
+        data.field.artId=artId;
+
+        console.log(data.field);
         $.ajax({
             url: "http://localhost:8081/portal/index/addComment",
+            data:data.field,
             success: function (res) {
-
+                layer.msg(res.msg);
             },
             complete: function (xhr, ts) {
                 if ((xhr.status >= 300 && xhr.status < 400) && xhr.status != 304) {

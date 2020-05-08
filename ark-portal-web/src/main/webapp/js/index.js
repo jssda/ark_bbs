@@ -3,8 +3,9 @@ layui.config({
     , base: '../../res/mods/' //这里实际使用时，建议改成绝对路径
 }).extend({
     fly: 'index',
-    tag: 'tag'
-}).use(['fly', 'form', 'layer', 'laytpl', 'laypage', 'layedit', 'laydate', 'upload', 'tag'], function () {
+    tag: 'tag',
+    cookie:'cookie'
+}).use(['cookie','fly', 'form', 'layer', 'laytpl', 'laypage', 'layedit', 'laydate', 'upload', 'tag'], function () {
     var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         laypage = layui.laypage,
@@ -14,7 +15,8 @@ layui.config({
         $ = layui.jquery,
         laytpl = layui.laytpl,
         tag = layui.tag,
-        fly = layui.fly;
+        fly = layui.fly,
+        cookie=layui.cookie;
 
     //加载公共页面资源
     $("#header").load("http://localhost:8081/html/common/header.html");
@@ -68,6 +70,8 @@ layui.config({
         }
     });
 
+
+/*
     // 加载用户数据, 查看用户是否登录, 如果用户登录, 将用户信息缓存到浏览器
     let token = layui.data("token").token;
     if (token == null) {
@@ -87,6 +91,6 @@ layui.config({
                 $(".fly-nav-user").html(html);
             });
         }
-    });
+    });*/
 
 });

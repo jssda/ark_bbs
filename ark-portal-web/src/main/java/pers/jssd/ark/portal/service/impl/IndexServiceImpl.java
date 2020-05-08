@@ -2,6 +2,7 @@ package pers.jssd.ark.portal.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import pers.jssd.ark.beans.ArkResult;
 import pers.jssd.ark.beans.PageNum;
 import pers.jssd.ark.beans.PageResult;
@@ -13,6 +14,8 @@ import pers.jssd.ark.rpc.service.TSectionService;
 import pers.jssd.ark.rpc.service.TUserInfoService;
 import pers.jssd.ark.util.PageUtil;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,6 +29,7 @@ public class IndexServiceImpl implements IndexService {
     private final TUserInfoService userInfoService;
     private final TCommentService commentService;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     public IndexServiceImpl(TSectionService sectionService, TArticleService articleService, TUserInfoService userInfoService, TCommentService commentService) {
         this.sectionService = sectionService;
         this.articleService = articleService;
@@ -173,5 +177,55 @@ public class IndexServiceImpl implements IndexService {
             pageResult.setMsg("查询失败");
             return pageResult;
         }
+    }
+
+    @Override
+    public ArkResult addComment(HttpServletRequest request) {
+        TUserInfo loginUser = (TUserInfo) request.getAttribute("loginUser");
+        String content = request.getParameter("content");
+        String artId = request.getParameter("artId");
+
+        String replyType = request.getParameter("replyType");
+
+        int i = 0;
+        try {
+            // 查看是不是对文章的评论信息
+            if (StringUtils.isEmpty(replyType)) {
+                TComment comment = new TComment();
+                comment.setComContent(content);
+                comment.setComArtId(Integer.valueOf(artId));
+                comment.setComUserId(loginUser.getUserId());
+                comment.setCreate(new Date());
+
+                i = commentService.addComment(comment);
+            } else { // 多级评论信息
+                TCommentMulti commentMulti = new TCommentMulti();
+
+                Integer comId = Integer.valueOf(request.getParameter("comId"));
+                Integer replayId = Integer.valueOf(request.getParameter("replayId"));
+                Integer targetId = Integer.valueOf(request.getParameter("targetId"));
+
+                commentMulti.setComMulContent(content);
+                commentMulti.setComMulCommentId(comId);
+                commentMulti.setReplayId(replayId);
+                commentMulti.setReplyType(replyType);
+                commentMulti.setCommentMulUserId(loginUser.getUserId());
+                commentMulti.setTargetId(targetId);
+                commentMulti.setCreate(new Date());
+
+                commentService.addCommentMulti(commentMulti);
+            }
+        } catch (NumberFormatException e) {
+            return new ArkResult(-1, "评论失败");
+        }
+
+        if (i > 0) {
+            // 添加一条消息
+
+
+        } else {
+            return new ArkResult(-1, "评论失败");
+        }
+        return null;
     }
 }

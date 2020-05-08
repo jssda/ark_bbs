@@ -25,7 +25,7 @@ public class SSOServiceImpl implements SSOService {
     private final TUserInfoService userInfoService;
     private final JedisCluster jedisCluster;
 
-    public SSOServiceImpl(TUserInfoService userInfoService, JedisCluster jedisCluster) {
+    public SSOServiceImpl(@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") TUserInfoService userInfoService, JedisCluster jedisCluster) {
         this.userInfoService = userInfoService;
         this.jedisCluster = jedisCluster;
     }
@@ -50,7 +50,7 @@ public class SSOServiceImpl implements SSOService {
 
                 // 将token信息响应到前端
                 // 设置cookie
-                CookieUtils.setCookie(request, response, "sso_token", token);
+                CookieUtils.setCookie(request, response, "sso_token", token, 1800);
                 ArkResult arkResult = new ArkResult(200, "用户登录成功");
                 arkResult.setData(token);
                 return arkResult;
@@ -74,9 +74,10 @@ public class SSOServiceImpl implements SSOService {
                 user.setPassword(null);
                 arkResult = new ArkResult(200, "用户查询成功");
                 arkResult.setData(user);
+                return arkResult;
             }
         }
-        arkResult = new ArkResult(-1, "error");
+        arkResult = new ArkResult(-1, "没有查找到任何用户");
 
         return arkResult;
     }

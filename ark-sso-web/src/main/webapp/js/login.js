@@ -8,12 +8,6 @@ layui.use(['form', 'layer', 'jquery'], function () {
     form.on("submit(login)", function (data) {
         $(this).text("登录中...").attr("disabled", "disabled").addClass("layui-disabled");
 
-        // 删除以前的令牌, 重新登录
-        let sessionData = layui.data("token");
-        if (sessionData != null) {
-            layui.data("token", null);
-        }
-
         // 登录请求
         let redirectUrl = layui.url(location.href).search.redirectUrl;
         if (redirectUrl == null) {
@@ -23,12 +17,10 @@ layui.use(['form', 'layer', 'jquery'], function () {
         $.ajax({
             url: "http://localhost:8083/sso/login",
             data: data.field,
+            async: false,
             success: function (res) {
                 if (res.code == 200) {
-                    // 存储令牌数据
-                    layui.data("token", {token:res.data});
-                    console.log("???");
-                    console.log(layui.data('token').token);
+                    top.layer.msg(res.msg);
                     location.href = redirectUrl;
                 }
             }

@@ -30,7 +30,7 @@
 
     <!--  跨域配置  -->
     <mvc:cors>
-        <mvc:mapping path="/**" allowed-origins="http://localhost:8081"/>
+        <mvc:mapping path="/**" allowed-origins="http://localhost:8081" allow-credentials="true"/>
     </mvc:cors>
 
     <!--静态资源放行-->
@@ -38,7 +38,6 @@
     <mvc:resources location="/css/" mapping="/css/**"/>
     <mvc:resources location="/js/" mapping="/js/**"/>
     <mvc:resources location="/img/" mapping="/img/**"/>
-    <mvc:resources location="/images/" mapping="/images/**"/>
     <mvc:resources location="/html/" mapping="/html/**"/>
 
 </beans>

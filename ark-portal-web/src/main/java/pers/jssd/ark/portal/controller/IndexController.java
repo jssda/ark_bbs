@@ -8,6 +8,8 @@ import pers.jssd.ark.beans.ArkResult;
 import pers.jssd.ark.beans.PageResult;
 import pers.jssd.ark.portal.service.IndexService;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 核心业务请求处理
  *
@@ -105,8 +107,7 @@ public class IndexController {
      * 添加一个一级评论
      */
     @RequestMapping("addComment")
-    public PageResult addComment() {
-        return null;
+    public ArkResult addComment(HttpServletRequest request) {
+        return indexService.addComment(request);
     }
-
 }

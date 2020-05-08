@@ -1,7 +1,7 @@
 <div class="fly-header layui-bg-black">
     <div class="layui-container">
         <a class="fly-logo" href="/">
-            <img src="../res/images/logo.png" alt="layui">
+            <img src="http://localhost:8081/res/images/logo.png" alt="layui">
         </a>
         <ul class="layui-nav fly-nav layui-hide-xs">
             <li class="layui-nav-item layui-this">
@@ -35,14 +35,14 @@
     <li class="layui-nav-item">
         <a class="fly-nav-avatar" href="javascript:;">
             <cite class="layui-hide-xs">{{ d.user.userName }}</cite>
-            {{# if(d.user.userLevel==1){ }}
-            <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：会员"></i>
-            {{# } else if(d.user.userLevel==2){ }}
-            <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员"></i>
+            {{# if(d.user.userLevel==0){ }}
+            <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：会员">会员</i>
+            {{# } else if(d.user.userLevel==1){ }}
+            <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员">管理员</i>
             {{# } }}
             <img src="{{ d.user.userImg }}">
         </a>
-        <dl class="layui-nav-child">
+        <dl class="layui-nav-child layui-anim layui-anim-upbit">
             <dd><a href="user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
             <dd><a href="user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
             <dd><a href="user/home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
@@ -53,4 +53,4 @@
     </li>
     {{# } }}
 </script>
-<!--<script src="../../js/index.js"></script>-->
+<script type="application/javascript" src="http://localhost:8081/js/header.js"></script>

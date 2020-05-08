@@ -3,6 +3,8 @@ package pers.jssd.ark.portal.service;
 import pers.jssd.ark.beans.ArkResult;
 import pers.jssd.ark.beans.PageResult;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 前端板块服务类
  *
@@ -55,4 +57,11 @@ public interface IndexService {
      * 通过一级评论id, 分页查询多级评论信息
      */
     PageResult listCommentMultiByPageNumAndComId(Integer comId, Integer page, Integer limit);
+
+    /**
+     * 添加一个评论信息
+     *
+     * @param request 请求对象
+     */
+    ArkResult addComment(HttpServletRequest request);
 }

@@ -37,6 +37,8 @@ public class SSOController {
      */
     @RequestMapping("checkUserByToken")
     public ArkResult checkUserByToken(String token) {
+        System.out.println("携带数据为:" + token);
+
         return ssoService.checkUserByToken(token);
     }
 

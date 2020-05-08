@@ -30,7 +30,7 @@
         <ul class="layui-nav fly-nav-user">
 
             &lt;!&ndash; 未登入的状态 &ndash;&gt;
-            <li class="layui-nav-item">
+            &lt;!&ndash;<li class="layui-nav-item">
                 <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>
             </li>
             <li class="layui-nav-item">
@@ -46,10 +46,9 @@
             <li class="layui-nav-item layui-hide-xs">
                 <a href="/app/weibo/" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" title="微博登入"
                    class="iconfont icon-weibo"></a>
-            </li>
+            </li>&ndash;&gt;
 
             &lt;!&ndash; 登入后的状态 &ndash;&gt;
-            &lt;!&ndash;
             <li class="layui-nav-item">
               <a class="fly-nav-avatar" href="javascript:;">
                 <cite class="layui-hide-xs">贤心</cite>
@@ -65,7 +64,6 @@
                 <dd><a href="/user/logout/" style="text-align: center;">退出</a></dd>
               </dl>
             </li>
-            &ndash;&gt;
         </ul>
     </div>
 </div>-->
@@ -311,7 +309,7 @@
     </div>
 </div>
 
-<div class="fly-footer">
+<!--<div class="fly-footer">
     <p><a href="http://fly.layui.com/" target="_blank">Fly社区</a> 2017 &copy; <a href="http://www.layui.com/"
                                                                                 target="_blank">layui.com 出品</a></p>
     <p>
@@ -319,8 +317,8 @@
         <a href="http://www.layui.com/template/fly/" target="_blank">获取Fly社区模版</a>
         <a href="http://fly.layui.com/jie/2461/" target="_blank">微信公众号</a>
     </p>
-</div>
-<!--<div id="footer"></div>-->
+</div>-->
+<div id="footer"></div>
 
 <script type="text/html" id="arkSectionTpl">
     {{#  layui.each(d, function(index, item){  }}

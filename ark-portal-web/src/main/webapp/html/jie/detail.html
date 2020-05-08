@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<div class="fly-header layui-bg-black">
+<!--<div class="fly-header layui-bg-black">
     <div class="layui-container">
         <a class="fly-logo" href="/">
             <img src="../../res/images/logo.png" alt="layui">
@@ -31,8 +31,8 @@
 
         <ul class="layui-nav fly-nav-user">
 
-            <!-- 未登入的状态 -->
-            <!--
+            &lt;!&ndash; 未登入的状态 &ndash;&gt;
+            &lt;!&ndash;
             <li class="layui-nav-item">
               <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>
             </li>
@@ -48,9 +48,9 @@
             <li class="layui-nav-item layui-hide-xs">
               <a href="/app/weibo/" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" title="微博登入" class="iconfont icon-weibo"></a>
             </li>
-             -->
+             &ndash;&gt;
 
-            <!-- 登入后的状态 -->
+            &lt;!&ndash; 登入后的状态 &ndash;&gt;
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;">
                     <cite class="layui-hide-xs">贤心</cite>
@@ -70,7 +70,9 @@
             </li>
         </ul>
     </div>
-</div>
+</div>-->
+
+<div id="header"></div>
 
 <div class="layui-hide-xs">
     <div class="fly-panel fly-column">
@@ -119,9 +121,17 @@
                     <div class="layui-form-item">
                         <input type="hidden" name="targetId">
                     </div>
-                    <!--回复的评论id-->
+                    <!--回复的一级评论id-->
+                    <div class="layui-form-item">
+                        <input type="hidden" name="comId">
+                    </div>
+                    <!--回复的二级评论id-->
                     <div class="layui-form-item">
                         <input type="hidden" name="replayId">
+                    </div>
+                    <!--回复类型-->
+                    <div class="layui-form-item">
+                        <input type="hidden" name="replyType">
                     </div>
 
                     <div class="layui-form-item layui-form-text">
@@ -176,6 +186,7 @@
 
 <!--文章标题和内容模板-->
 <script id="articleTpl" type="text/html">
+    <div class="layui-hide" id="artId">{{ d.artId }}</div>
     <div class="fly-panel detail-box">
         <h1>{{ d.artTitle }}</h1>
         <!--文章的一些热度, 多少评论 多少点赞量信息 -->
