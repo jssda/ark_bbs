@@ -49,7 +49,7 @@ layui.use(['cookie', 'fly', 'form', 'layer', 'laytpl', 'laypage', 'layedit', 'la
                     let data = res.data;
 
                     layui.each(data, function (index, it) {
-                        it.create = util.timeAgo(stringToDate(it.create));
+                        it.create = getTimeAge(it.create);
                     })
 
                     let getTpl = $("#jieTpl").html();
@@ -75,5 +75,9 @@ layui.use(['cookie', 'fly', 'form', 'layer', 'laytpl', 'laypage', 'layedit', 'la
         var second = parseInt(timeStrs[2], 10);
         var date = new Date(year, month, day, hour, minute, second);
         return date;
+    }
+
+    function getTimeAge(str) {
+        return util.timeAgo(stringToDate(str));
     }
 });

@@ -83,4 +83,9 @@ public interface TArticleService {
      * 通过用户id, 分页查询文章信息, 时间倒叙排序
      */
     PageInfo<TArticle> selectArticleByPageNumAndUserId(PageNum pageNum, Integer userId);
+
+    /**
+     * 分页查询置顶文章
+     */
+    PageInfo<TArticle> selectArticleByPageNumAndTop(PageNum pageNum);
 }

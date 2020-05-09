@@ -83,9 +83,23 @@ public interface IndexService {
      */
     ArkResult isCollection(Integer artId, Integer userId);
 
+    /**
+     * 查询板块信息
+     */
     ArkResult querySectionBy(String key);
 
+    /**
+     * 分页展示板块信息
+     */
     TableResult listSection(Integer page, Integer limit);
 
+    /**
+     * 添加一篇文章
+     */
     ArkResult addArticle(TArticle article, TUserInfo loginUser);
+
+    /**
+     * 分页查询置顶文章
+     */
+    PageResult listArticleByTopAndPage(Integer page, Integer limit);
 }

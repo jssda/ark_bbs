@@ -132,7 +132,7 @@ public class IndexController {
      * 查看文章是否被收藏
      */
     @RequestMapping("isCollection")
-    public ArkResult isCollection(Integer artId,@RequestParam(required = false) Integer userId) {
+    public ArkResult isCollection(Integer artId, @RequestParam(required = false) Integer userId) {
         return indexService.isCollection(artId, userId);
     }
 
@@ -169,6 +169,14 @@ public class IndexController {
     public ArkResult addArticle(@RequestBody TArticle article, @RequestAttribute TUserInfo loginUser) {
 
         return indexService.addArticle(article, loginUser);
+    }
+
+    /**
+     * 分页查询置顶的文章
+     */
+    @RequestMapping("listArticleByTop")
+    public PageResult listArticleByTopAndPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "5") Integer limit) {
+        return indexService.listArticleByTopAndPage(page, limit);
     }
 
 }

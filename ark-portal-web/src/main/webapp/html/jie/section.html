@@ -189,7 +189,7 @@
 
 <script type="text/html" id="arkArticleTpl">
     <div class="fly-panel-title fly-filter">
-        {{#  console.log(d.section) }}
+        {{# console.log(d.section) }}
         <a>{{ d.section.secTitle }}</a>
         <span class="layui-show-xs-block fly-right" style="color: #FF5722;">版主: {{ d.section.user.userName }}</span>
     </div>
@@ -209,11 +209,17 @@
                 <a href="http://localhost:8081/html/jie/detail.html?artId={{ it.artId }}">{{ it.artTitle }}</a>
             </h2>
             <div class="fly-list-info">
-                <a href="user/home.html" link>
+                <a href="http://localhost:8081/html/user/home.html" link>
                     <cite>{{ it.user.userName }}</cite>
+                    {{# if(it.user.userLevel == 1) { }}
+                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：会员">会员</i>
+                    {{# } else if(it.user.userLevel == 2) { }}
+                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员">管理员</i>
+                    {{# } }}
                 </a>
                 <span>{{ it.create }}</span>
-                <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="回答"></i>  {{ it.commentCount }} </span>
+                <span class="fly-list-nums"><i class="iconfont icon-pinglun1"
+                                               title="回答"></i>  {{ it.commentCount }} </span>
             </div>
             <div class="fly-list-badge">
                 {{# if(it.isTop == 1 ){ }}

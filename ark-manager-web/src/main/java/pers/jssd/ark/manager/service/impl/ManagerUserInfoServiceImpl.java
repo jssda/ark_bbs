@@ -11,6 +11,7 @@ import pers.jssd.ark.rpc.service.TUserInfoService;
 import pers.jssd.ark.util.PageUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -77,6 +78,7 @@ public class ManagerUserInfoServiceImpl implements ManagerUserInfoService {
             }
         } else {
             userInfo.setUsed("0");
+            userInfo.setCreate(new Date());
             Integer addUserId = tUserInfoService.addUserInfo(userInfo);
             if (addUserId != 0) {
                 return new ArkResult(200, "添加用户成功");

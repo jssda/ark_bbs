@@ -15,43 +15,13 @@
 
 <div id="column"></div>
 
-<!--<div class="fly-panel fly-column">
-    <div class="layui-container">
-        <ul class="layui-clear">
-            <li class="layui-hide-xs layui-this"><a href="/">首页</a></li>
-            <li><a href="http://localhost:8081/html/jie/section.html?secId=7">测试板块</a></li>
-            <li><a href="http://localhost:8081/html/jie/section.html">分享<span class="layui-badge-dot"></span></a></li>
-            <li><a href="jie/section.html">讨论</a></li>
-            <li><a href="jie/section.html">建议</a></li>
-            <li><a href="jie/section.html">公告</a></li>
-            <li><a href="jie/section.html">动态</a></li>
-            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
-
-            &lt;!&ndash; 用户登入后显示 &ndash;&gt;
-            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/collection.html">我发表的贴</a></li>
-            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/collection.html#collection">我收藏的贴</a>
-            </li>
-        </ul>
-
-        <div class="fly-column-right layui-hide-xs">
-            <span class="fly-search"><i class="layui-icon"></i></span>
-            <a href="jie/add.html" class="layui-btn">发表新帖</a>
-        </div>
-        <div class="layui-hide-sm layui-show-xs-block"
-             style="margin-top: -10px; padding-bottom: 10px; text-align: center;">
-            <a href="jie/add.html" class="layui-btn">发表新帖</a>
-        </div>
-    </div>
-</div>-->
-
 <div class="layui-container">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md8">
 
-            <div id="arkSectionView"></div>
-
+            <div id="arkArticleView"></div>
             <div class="fly-panel">
-                <div id="sectionPage" style="text-align: center"></div>
+                <div id="articlePage" style="text-align: center"></div>
             </div>
 
         </div>
@@ -87,10 +57,10 @@
 
             <dl class="fly-panel fly-list-one">
                 <dt class="fly-panel-title">本周热议</dt>
-<!--                <dd>
-                    <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>-->
+                <!--                <dd>
+                                    <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
+                                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
+                                </dd>-->
 
 
                 <!-- 无数据时 -->
@@ -131,31 +101,34 @@
 
 <div id="footer"></div>
 
-<script type="text/html" id="arkSectionTpl">
-    {{#  layui.each(d, function(index, item){  }}
+<script type="text/html" id="arkArticleTpl">
     <div class="fly-panel">
         <div class="fly-panel-title fly-filter">
-            <a>{{ item.secTitle }}</a>
-            <span class="layui-show-xs-block fly-right" style="color: #FF5722;">版主: {{ item.user.userName }}</span>
+            <a>置顶</a>
         </div>
-
         <ul id="articleList" class="fly-list">
             <!-- 如果没有文章信息, 提示没有文章-->
-            {{# if(item.articleList == null || item.articleList.length == 0){ }}
+            {{# if(d == null || d.length == 0) { }}
             <div class="ark-none">没有数据</div>
             {{# } else { }}
+            {{# layui.each(d, function(index, it){ }}
 
-            {{# layui.each(item.articleList, function(i, it){ }}
             <li>
                 <a href="http://localhost:8081/html/user/home.html?userId={{it.user.userId}}" class="fly-avatar">
                     <img src=" {{ it.user.userImg==null?'':it.user.userImg }} " alt=" {{ it.user.userName }} ">
                 </a>
                 <h2>
+                    <a class="layui-badge">{{ it.section.secTitle }}</a>
                     <a href="http://localhost:8081/html/jie/detail.html?artId={{ it.artId }}">{{ it.artTitle }}</a>
                 </h2>
                 <div class="fly-list-info">
                     <a href="user/home.html" link>
                         <cite>{{ it.user.userName }}</cite>
+                        {{# if(it.user.userLevel == 1) { }}
+                        <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：会员">会员</i>
+                        {{# } else if(it.user.userLevel == 2) { }}
+                        <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员">管理员</i>
+                        {{# } }}
                     </a>
                     <span>{{ it.create }}</span>
                     <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="回答"></i> {{ it.commentCount }}</span>
@@ -166,19 +139,11 @@
                     {{# }}}
                 </div>
             </li>
+
             {{# }) }}
             {{# } }}
         </ul>
-        {{# if(item.articleList != null && item.articleList.length != 0){ }}
-        <div style="text-align: center">
-            <div class="laypage-main">
-                <a href="http://localhost:8081/html/jie/section.html?secId={{ item.secId }}"
-                   class="laypage-next">查看更多</a>
-            </div>
-        </div>
-        {{# } }}
     </div>
-    {{# }) }}
 </script>
 
 <script src="../res/layui/layui.js"></script>

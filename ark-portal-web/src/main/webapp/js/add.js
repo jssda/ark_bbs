@@ -96,6 +96,11 @@ layui.config({
                 url: "http://localhost:8081/portal/index/queryBy",
                 data: {"key": val},
                 success: function (res) {
+                    layui.each(res.data, function (index, item) {
+                        if (item.secTitle === '公告') {
+                            delete res.data[index];
+                        }
+                    })
                     return cb(res.data);
                 }
             })
@@ -119,6 +124,11 @@ layui.config({
                     url: "http://localhost:8081/portal/index/list",
                     async: false,
                     success: function (res) {
+                        layui.each(res.data, function (index, item) {
+                            if (item.secTitle === '公告') {
+                                delete res.data[index];
+                            }
+                        })
                         sectionList = res.data;
                     }
                 });
@@ -162,16 +172,24 @@ layui.config({
                 layer.closeAll("iframe");
                 //刷新父页面
                 parent.location.reload();
+            },
+            complete: function (xhr, ts) {
+                if ((xhr.status >= 300 && xhr.status < 400) && xhr.status != 304) {
+                    //重定向网址在响应头中，取出再执行跳转
+                    let redirectUrl = xhr.getResponseHeader('redirectUrl');
+                    let localUrl = location.href;
+                    location.href = redirectUrl + '?redirectUrl=' + localUrl;
+                }
             }
         });
 
         return false;
     });
 
-/*    //预览
-    form.on("submit(look)", function () {
-        layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问");
-        return false;
-    });*/
+    /*    //预览
+        form.on("submit(look)", function () {
+            layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问");
+            return false;
+        });*/
 });
 

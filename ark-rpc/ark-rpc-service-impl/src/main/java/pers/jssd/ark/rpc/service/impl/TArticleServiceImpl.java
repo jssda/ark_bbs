@@ -11,7 +11,6 @@ import pers.jssd.ark.rpc.service.TArticleService;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -138,6 +137,15 @@ public class TArticleServiceImpl implements TArticleService {
     @Override
     public int addArticle(TArticle article) {
         article.setCreate(new Date());
+        if (article.getArtHotNum() == null) {
+            article.setArtHotNum(0);
+        }
+        if (article.getArtLikeNum() == null) {
+            article.setArtLikeNum(0);
+        }
+        if (article.getIsTop() == null) {
+            article.setIsTop("0");
+        }
 
         List<String> typeNames = article.getTypeNames();
         List<Integer> typeIds = null;
@@ -267,6 +275,22 @@ public class TArticleServiceImpl implements TArticleService {
     }
 
     @Override
+    public PageInfo<TArticle> selectArticleByPageNumAndTop(PageNum pageNum) {
+        PageHelper.startPage(pageNum.getPage(), pageNum.getLimit());
+        TArticleExample articleExample = new TArticleExample();
+        TArticleExample.Criteria articleExampleCriteria = articleExample.createCriteria();
+        articleExampleCriteria.andIsTopLike("1");
+        articleExample.setOrderByClause("`create` desc");
+        List<TArticle> tArticles = articleMapper.selectByExample(articleExample);
+
+        getUserInfo(tArticles.toArray(new TArticle[0]));
+        getSection(tArticles.toArray(new TArticle[0]));
+        getCommentCount(tArticles.toArray(new TArticle[0]));
+
+        return new PageInfo<>(tArticles);
+    }
+
+    @Override
     public TArticle selectArticleByArtId(Integer artId) {
         TArticle article = articleMapper.selectByPrimaryKey(artId);
 
@@ -284,13 +308,6 @@ public class TArticleServiceImpl implements TArticleService {
     @Override
     public PageInfo<TArticle> selectArticleByPageNumAndSecId(PageNum pageNum, Integer secId) {
 
-        TArticleExample articleExample1 = new TArticleExample();
-        TArticleExample.Criteria criteria = articleExample1.createCriteria();
-        criteria.andArtSecIdEqualTo(secId);
-        criteria.andIsTopEqualTo("1");
-        articleExample1.setOrderByClause("`create` desc");
-        List<TArticle> tArticles1 = articleMapper.selectByExample(articleExample1);
-
         PageHelper.startPage(pageNum.getPage(), pageNum.getLimit());
         TArticleExample articleExample = new TArticleExample();
         TArticleExample.Criteria articleExampleCriteria = articleExample.createCriteria();
@@ -298,19 +315,11 @@ public class TArticleServiceImpl implements TArticleService {
         articleExample.setOrderByClause("`create` desc");
         List<TArticle> tArticles = articleMapper.selectByExample(articleExample);
 
-        // hashset去重
-        HashSet<TArticle> set = new HashSet<>(tArticles1);
-        for (TArticle article : tArticles) {
-            if (set.add(article)) {
-                tArticles1.add(article);
-            }
-        }
 
+        getUserInfo(tArticles.toArray(new TArticle[0]));
+        getCommentCount(tArticles.toArray(new TArticle[0]));
 
-        getUserInfo(tArticles1.toArray(new TArticle[0]));
-        getCommentCount(tArticles1.toArray(new TArticle[0]));
-
-        return new PageInfo<>(tArticles1);
+        return new PageInfo<>(tArticles);
     }
 
     /**

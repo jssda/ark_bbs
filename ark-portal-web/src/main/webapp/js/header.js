@@ -66,8 +66,8 @@ layui.use(['layer', 'laytpl', 'cookie', 'jquery', 'element'], function () {
             success: function (res) {
                 layer.msg(res.msg);
                 if (res.code === 200) {
-                    $.removeCookie("userInfo");
-                    $.removeCookie('sso_token');
+                    // 删除 cookie
+                    $.removeCookie("userInfo", {domain: 'localhost', path: '/'});
                     location.reload();
                 }
             }

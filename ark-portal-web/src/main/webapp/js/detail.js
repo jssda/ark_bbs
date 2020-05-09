@@ -4,8 +4,8 @@ layui.config({
 }).extend({
     tag: 'tag',
     fly: 'index',
-    cookie:'cookie'
-}).use(['fly', 'face', 'flow', 'form', 'layer', 'laytpl','cookie', 'laypage', 'layedit', 'laydate', 'upload', 'tag', 'element'], function () {
+    cookie: 'cookie'
+}).use(['fly', 'face', 'flow', 'form', 'layer', 'laytpl', 'cookie', 'laypage', 'layedit', 'laydate', 'upload', 'tag', 'element'], function () {
     var $ = layui.$,
         form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
@@ -38,7 +38,10 @@ layui.config({
                 data = res.data;
 
                 // 查看文章是否被收藏
-                let loginUser = JSON.parse($.cookie("userInfo"));
+                let loginUser;
+                if ($.cookie("userInfo") != null) {
+                    loginUser = JSON.parse($.cookie("userInfo"));
+                }
                 let loginUserId = null;
                 if (loginUser != null) {
                     loginUserId = loginUser.userId;
@@ -62,6 +65,8 @@ layui.config({
                         data.isCollection = false;
                     }
                 });
+
+                data.loginUserId = loginUserId;
 
                 let artTplHtml = $("#articleTpl").html();
                 let artTplView = $("#articleView");

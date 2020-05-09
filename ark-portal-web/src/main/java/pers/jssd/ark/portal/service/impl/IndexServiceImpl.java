@@ -348,4 +348,18 @@ public class IndexServiceImpl implements IndexService {
             return new ArkResult(-1, "文章添加失败");
         }
     }
+
+    @Override
+    public PageResult listArticleByTopAndPage(Integer page, Integer limit) {
+        PageNum pageNum = PageUtil.getPageNum(page, limit);
+        PageInfo<TArticle> articlePageInfo = articleService.selectArticleByPageNumAndTop(pageNum);
+        PageResult pageResult = new PageResult();
+        pageResult.setCode(200);
+        pageResult.setCount((int) articlePageInfo.getTotal());
+        pageResult.setData(articlePageInfo.getList());
+        pageResult.setMsg("置顶文章查询成功");
+        pageResult.setSize(articlePageInfo.getSize());
+
+        return pageResult;
+    }
 }

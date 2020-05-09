@@ -115,7 +115,7 @@
             <button class="layui-btn layui-btn-xs jie-admin layui-btn-disabled" disabled>已收藏</button>
             {{# } }}
 
-            {{# if(d.section.secUserId == (layui.data("userInfo").user==null?-1:layui.data("userInfo").user.userId) ){
+            {{# if(d.section.secUserId == (d.loginUserId==null?-1:d.loginUserId) ){
             }}
             {{# if(d.isTop == 1){ }}
             <span class="layui-btn layui-btn-xs jie-admin" id="unTopThis">取消置顶</span>
@@ -192,6 +192,11 @@
                     <span>{{ d.create }}</span>
                 </div>
                 <div class="detail-hits" id="LAY_jieAdmin" data-id="123">
+                    {{#  if(d.userLevel == 1) { }}
+                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：会员">会员</i>
+                    {{# } else if(d.userLevel == 2) { }}
+                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员">管理员</i>
+                    {{# } }}
                     <span class="layui-btn layui-btn-xs jie-admin" id="followThis">关注用户</span>
                 </div>
             </div>

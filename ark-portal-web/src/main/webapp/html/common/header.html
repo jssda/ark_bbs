@@ -23,9 +23,9 @@
     <li class="layui-nav-item">
         <a class="fly-nav-avatar" href="javascript:;">
             <cite class="layui-hide-xs">{{ d.user.userName }}</cite>
-            {{# if(d.user.userLevel==0){ }}
+            {{# if(d.user.userLevel==1){ }}
             <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：会员">会员</i>
-            {{# } else if(d.user.userLevel==1){ }}
+            {{# } else if(d.user.userLevel==2){ }}
             <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员">管理员</i>
             {{# } }}
             <img src="{{ d.user.userImg }}">
