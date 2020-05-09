@@ -154,7 +154,7 @@ public final class CookieUtils {
     }
 
     /**
-     * 删除Cookie带cookie域名
+     * 删除Cookie
      *
      * @param request    请求对象
      * @param response   响应对象

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class TArticle implements Serializable {
     private Integer artId;
@@ -199,5 +200,20 @@ public class TArticle implements Serializable {
 
     public void setCommentCount(Integer commentCount) {
         this.commentCount = commentCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        TArticle article = (TArticle) o;
+        return Objects.equals(artId, article.artId) && Objects.equals(artUserId, article.artUserId) && Objects.equals(artTitle, article.artTitle) && Objects.equals(artHotNum, article.artHotNum) && Objects.equals(artLikeNum, article.artLikeNum) && Objects.equals(isTop, article.isTop) && Objects.equals(artSecId, article.artSecId) && Objects.equals(create, article.create) && Objects.equals(update, article.update) && Objects.equals(artContent, article.artContent) && Objects.equals(commentCount, article.commentCount) && Objects.equals(user, article.user) && Objects.equals(articleTypes, article.articleTypes) && Objects.equals(section, article.section) && Objects.equals(typeIds, article.typeIds) && Objects.equals(typeNames, article.typeNames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(artId, artUserId, artTitle, artHotNum, artLikeNum, isTop, artSecId, create, update, artContent, commentCount, user, articleTypes, section, typeIds, typeNames);
     }
 }

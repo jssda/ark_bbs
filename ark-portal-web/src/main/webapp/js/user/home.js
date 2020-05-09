@@ -26,7 +26,7 @@ layui.use(['cookie', 'fly', 'form', 'layer', 'laytpl', 'laypage', 'layedit', 'la
                 }
             })
         } else {
-            data = layui.data('userInfo').user;
+            data = JSON.parse($.cookie("userInfo"));
             if (data != null) {
                 data.isMe = 1;
             }

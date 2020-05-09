@@ -21,6 +21,7 @@ layui.config({
     //加载公共页面资源
     $("#header").load("http://localhost:8081/html/common/header.html");
     $("#footer").load("http://localhost:8081/html/common/footer.html");
+    $("#column").load("http://localhost:8081/html/common/column.html");
 
     let sectionCount;
 

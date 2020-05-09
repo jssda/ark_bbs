@@ -20,6 +20,7 @@
     <dubbo:reference interface="pers.jssd.ark.rpc.service.TUserInfoService" id="userInfoService"/>
     <dubbo:reference interface="pers.jssd.ark.rpc.service.TCommentService" id="commentService"/>
     <dubbo:reference interface="pers.jssd.ark.rpc.service.TMessageService" id="messageService"/>
+    <dubbo:reference interface="pers.jssd.ark.rpc.service.TCollectionService" id="collectionService"/>
     <!--suppress UnparsedCustomBeanInspection -->
 
 </beans>

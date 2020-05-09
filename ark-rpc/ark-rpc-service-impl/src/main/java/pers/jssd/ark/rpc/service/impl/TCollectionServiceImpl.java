@@ -79,6 +79,16 @@ public class TCollectionServiceImpl implements TCollectionService {
         return collectionMapper.insertSelective(tCollection);
     }
 
+    @Override
+    public List<TCollection> selectCollectionByArtIdAndUserId(TCollection collection) {
+        TCollectionExample collectionExample = new TCollectionExample();
+        TCollectionExample.Criteria collectionExampleCriteria = collectionExample.createCriteria();
+        collectionExampleCriteria.andColArtIdEqualTo(collection.getColArtId());
+        collectionExampleCriteria.andColUserIdEqualTo(collection.getColUserId());
+
+        return collectionMapper.selectByExample(collectionExample);
+    }
+
     /**
      * 获取收藏表中的文章信息
      *

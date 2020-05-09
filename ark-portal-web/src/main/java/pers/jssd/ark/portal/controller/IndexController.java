@@ -1,12 +1,13 @@
 package pers.jssd.ark.portal.controller;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import pers.jssd.ark.beans.ArkResult;
 import pers.jssd.ark.beans.PageResult;
+import pers.jssd.ark.beans.TableResult;
 import pers.jssd.ark.portal.service.IndexService;
+import pers.jssd.ark.rpc.pojo.TArticle;
+import pers.jssd.ark.rpc.pojo.TUserInfo;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -118,4 +119,56 @@ public class IndexController {
     public PageResult listArticleByUserIdAndPageNum(Integer userId, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "5") Integer limit) {
         return indexService.listArticleByUserIdAndPageNum(userId, page, limit);
     }
+
+    /**
+     * 收藏一篇文章
+     */
+    @RequestMapping("collectionThis/{artId}")
+    public ArkResult collectionThis(@PathVariable Integer artId, @RequestAttribute TUserInfo loginUser) {
+        return indexService.collectionThis(artId, loginUser);
+    }
+
+    /**
+     * 查看文章是否被收藏
+     */
+    @RequestMapping("isCollection")
+    public ArkResult isCollection(Integer artId,@RequestParam(required = false) Integer userId) {
+        return indexService.isCollection(artId, userId);
+    }
+
+    /**
+     * 不分页的查询所有板块信息
+     *
+     * @param key 查询关键字
+     * @return 返回查询到的板块信息
+     */
+    @RequestMapping("queryBy")
+    public ArkResult querySectionBy(@RequestParam(defaultValue = "") String key) {
+        return indexService.querySectionBy(key);
+    }
+
+    /**
+     * 查询所有的板块信息
+     *
+     * @param page  第几页
+     * @param limit 每页多少条数据
+     * @return 返回查询到的表格数据
+     */
+    @RequestMapping("/list")
+    public TableResult listSection(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer limit) {
+        return indexService.listSection(page, limit);
+    }
+
+    /**
+     * 添加文章
+     *
+     * @return 返回是否添加成功的信息
+     */
+    @RequestMapping(value = "addArticle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public ArkResult addArticle(@RequestBody TArticle article, @RequestAttribute TUserInfo loginUser) {
+
+        return indexService.addArticle(article, loginUser);
+    }
+
 }

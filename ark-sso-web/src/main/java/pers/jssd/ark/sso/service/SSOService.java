@@ -22,4 +22,10 @@ public interface SSOService {
      * 通过令牌检查用户是否登录
      */
     ArkResult checkUserByToken(String token);
+
+    /**
+     * 用户退出
+     */
+    ArkResult logout(String token);
+
 }

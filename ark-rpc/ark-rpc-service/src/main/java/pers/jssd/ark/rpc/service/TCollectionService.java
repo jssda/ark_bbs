@@ -45,4 +45,10 @@ public interface TCollectionService {
      * 添加收藏
      */
     int insertCollection(TCollection tCollection);
+
+    /**
+     * 查询指定人物是否收藏了指定文章
+     */
+    List<TCollection> selectCollectionByArtIdAndUserId(TCollection collection);
+
 }

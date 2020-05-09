@@ -11,6 +11,7 @@ import pers.jssd.ark.rpc.service.TArticleService;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -268,6 +269,11 @@ public class TArticleServiceImpl implements TArticleService {
     @Override
     public TArticle selectArticleByArtId(Integer artId) {
         TArticle article = articleMapper.selectByPrimaryKey(artId);
+
+        // 每次查询热度加一
+        article.setArtHotNum(article.getArtHotNum() + 1);
+        articleMapper.updateByPrimaryKeySelective(article);
+
         getUserInfo(article);
         getSection(article);
         getCommentCount(article);
@@ -278,17 +284,33 @@ public class TArticleServiceImpl implements TArticleService {
     @Override
     public PageInfo<TArticle> selectArticleByPageNumAndSecId(PageNum pageNum, Integer secId) {
 
-        PageHelper.startPage(pageNum.getPage(), pageNum.getLimit());
+        TArticleExample articleExample1 = new TArticleExample();
+        TArticleExample.Criteria criteria = articleExample1.createCriteria();
+        criteria.andArtSecIdEqualTo(secId);
+        criteria.andIsTopEqualTo("1");
+        articleExample1.setOrderByClause("`create` desc");
+        List<TArticle> tArticles1 = articleMapper.selectByExample(articleExample1);
 
+        PageHelper.startPage(pageNum.getPage(), pageNum.getLimit());
         TArticleExample articleExample = new TArticleExample();
         TArticleExample.Criteria articleExampleCriteria = articleExample.createCriteria();
         articleExampleCriteria.andArtSecIdEqualTo(secId);
+        articleExample.setOrderByClause("`create` desc");
         List<TArticle> tArticles = articleMapper.selectByExample(articleExample);
 
-        getUserInfo(tArticles.toArray(new TArticle[0]));
-        getCommentCount(tArticles.toArray(new TArticle[0]));
+        // hashset去重
+        HashSet<TArticle> set = new HashSet<>(tArticles1);
+        for (TArticle article : tArticles) {
+            if (set.add(article)) {
+                tArticles1.add(article);
+            }
+        }
 
-        return new PageInfo<>(tArticles);
+
+        getUserInfo(tArticles1.toArray(new TArticle[0]));
+        getCommentCount(tArticles1.toArray(new TArticle[0]));
+
+        return new PageInfo<>(tArticles1);
     }
 
     /**

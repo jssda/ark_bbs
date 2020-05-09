@@ -3,8 +3,9 @@ layui.config({
     , base: 'http://localhost:8081/res/mods/'
 }).extend({
     tag: 'tag',
-    fly: 'index'
-}).use(['fly', 'face', 'flow', 'form', 'layer', 'laytpl', 'laypage', 'layedit', 'laydate', 'upload', 'tag', 'element'], function () {
+    fly: 'index',
+    cookie:'cookie'
+}).use(['fly', 'face', 'flow', 'form', 'layer', 'laytpl','cookie', 'laypage', 'layedit', 'laydate', 'upload', 'tag', 'element'], function () {
     var $ = layui.$,
         form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
@@ -16,12 +17,15 @@ layui.config({
         laytpl = layui.laytpl,
         tag = layui.tag,
         flow = layui.flow,
+        cookie = layui.cookie,
         fly = layui.fly;
 
     //加载公共页面资源
     $("#header").load("http://localhost:8081/html/common/header.html");
-    // $("#footer").load("http://localhost:8081/html/common/footer.html");
+    $("#footer").load("http://localhost:8081/html/common/footer.html");
+    $("#column").load("http://localhost:8081/html/common/column.html");
 
+    let article;
     // 初始化文章信息
     $.ajax({
         url: "http://localhost:8081/portal/index/getArticleByArtId/" + layui.url().search.artId,
@@ -32,14 +36,41 @@ layui.config({
                 top.layer.msg(res.msg);
             } else {
                 data = res.data;
+
+                // 查看文章是否被收藏
+                let loginUser = JSON.parse($.cookie("userInfo"));
+                let loginUserId = null;
+                if (loginUser != null) {
+                    loginUserId = loginUser.userId;
+                }
+                $.ajax({
+                    url: 'http://localhost:8081/portal/index/isCollection',
+                    type: "POST",
+                    data: {
+                        artId: data.artId,
+                        userId: loginUserId
+                    },
+                    async: false,
+                    success: function (res) {
+                        if (res.code === 200) {
+                            data.isCollection = true;
+                        } else {
+                            data.isCollection = false;
+                        }
+                    },
+                    error: function () {
+                        data.isCollection = false;
+                    }
+                });
+
                 let artTplHtml = $("#articleTpl").html();
                 let artTplView = $("#articleView");
                 laytpl(artTplHtml).render(data, function (html) {
                     artTplView.html(html);
                 })
             }
-
-            // 流加载
+            article = data;
+            // 流加载评论信息
             flow.load({
                 elem: "#commentView" /*指定列表容器*/,
                 isAuto: false,
@@ -67,7 +98,7 @@ layui.config({
             });
 
             // 加载文章用户信息
-            var user = data.user;
+            let user = data.user;
             let artUserHtml = $("#artUserTpl").html();
             let artUserView = $("#artUserView");
             laytpl(artUserHtml).render(user, function (html) {
@@ -158,7 +189,7 @@ layui.config({
             $("input[name=replyType]").val(0);
         }
 
-        $("#L_content").focus();
+        $("#submitComment").focus();
         $("#targetUserName").text("@" + targetUserName + ":");
         $("input[name=targetId]").val(targetUserId);
         $("input[name=replayId]").val(targetComId);
@@ -203,5 +234,25 @@ layui.config({
         return false;
     })
 
+    // 收藏文章
+    $(document).on('click', '#collectionThis', function () {
+        $.ajax({
+            url: "http://localhost:8081/portal/index/collectionThis/" + article.artId,
+            success: function (res) {
+                layer.msg(res.msg);
+                if (res.code === 200) {
+                    location.reload();
+                }
+            },
+            complete: function (xhr, ts) {
+                if ((xhr.status >= 300 && xhr.status < 400) && xhr.status !== 304) {
+                    //重定向网址在响应头中，取出再执行跳转
+                    let redirectUrl = xhr.getResponseHeader('redirectUrl');
+                    let localUrl = location.href;
+                    location.href = redirectUrl + '?redirectUrl=' + localUrl;
+                }
+            }
+        })
+    })
 });
 

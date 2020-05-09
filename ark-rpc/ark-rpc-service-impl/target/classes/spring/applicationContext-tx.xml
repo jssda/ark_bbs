@@ -28,7 +28,6 @@
             <tx:method name="modify*"/>
             <tx:method name="update*"/>
             <!-- 只读事务 -->
-            <tx:method name="select*" read-only="true"/>
             <tx:method name="find*" read-only="true"/>
             <tx:method name="get*" read-only="true"/>
         </tx:attributes>

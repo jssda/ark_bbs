@@ -40,4 +40,12 @@ public class SSOController {
         return ssoService.checkUserByToken(token);
     }
 
+    /**
+     * 用户退出
+     */
+    @RequestMapping("logout")
+    public ArkResult logout(String token) {
+        return ssoService.logout(token);
+    }
+
 }

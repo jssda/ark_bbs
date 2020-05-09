@@ -2,6 +2,9 @@ package pers.jssd.ark.portal.service;
 
 import pers.jssd.ark.beans.ArkResult;
 import pers.jssd.ark.beans.PageResult;
+import pers.jssd.ark.beans.TableResult;
+import pers.jssd.ark.rpc.pojo.TArticle;
+import pers.jssd.ark.rpc.pojo.TUserInfo;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -69,4 +72,20 @@ public interface IndexService {
      * 查询用户近期发布的帖子
      */
     PageResult listArticleByUserIdAndPageNum(Integer userId, Integer page, Integer limit);
+
+    /**
+     * 收藏一篇文章
+     */
+    ArkResult collectionThis(Integer artId, TUserInfo loginUser);
+
+    /**
+     * 查看文章是否被收藏
+     */
+    ArkResult isCollection(Integer artId, Integer userId);
+
+    ArkResult querySectionBy(String key);
+
+    TableResult listSection(Integer page, Integer limit);
+
+    ArkResult addArticle(TArticle article, TUserInfo loginUser);
 }

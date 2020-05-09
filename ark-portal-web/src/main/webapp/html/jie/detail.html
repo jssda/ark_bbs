@@ -13,43 +13,13 @@
 <body>
 
 <div id="header"></div>
-
-<div class="layui-hide-xs">
-    <div class="fly-panel fly-column">
-        <div class="layui-container">
-            <ul class="layui-clear">
-                <li class="layui-hide-xs"><a href="/">首页</a></li>
-                <li class="layui-this"><a href="">提问</a></li>
-                <li><a href="">分享<span class="layui-badge-dot"></span></a></li>
-                <li><a href="">讨论</a></li>
-                <li><a href="">建议</a></li>
-                <li><a href="">公告</a></li>
-                <li><a href="">动态</a></li>
-                <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
-
-                <!-- 用户登入后显示 -->
-                <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                        href="../user/collection.html">我发表的贴</a></li>
-                <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                        href="../user/collection.html#collection">我收藏的贴</a></li>
-            </ul>
-
-            <div class="fly-column-right layui-hide-xs">
-                <span class="fly-search"><i class="layui-icon"></i></span>
-                <a href="add.html" class="layui-btn">发表新帖</a>
-            </div>
-            <div class="layui-hide-sm layui-show-xs-block"
-                 style="margin-top: -10px; padding-bottom: 10px; text-align: center;">
-                <a href="add.html" class="layui-btn">发表新帖</a>
-            </div>
-        </div>
-    </div>
-</div>
+<div id="column"></div>
 
 <div class="layui-container">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md8 content detail">
             <div id="articleView"></div>    <!--回帖信息-->
+
             <!--评论信息-->
             <div class="fly-panel detail-box" id="flyReply">
                 <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
@@ -92,7 +62,7 @@
                         </div>-->
                     </div>
                     <div class="layui-form-item">
-                        <button class="layui-btn" lay-filter="submitComment" lay-submit>提交回复</button>
+                        <button class="layui-btn" id="submitComment" lay-filter="submitComment" lay-submit>提交回复</button>
                     </div>
                 </form>
             </div>
@@ -125,15 +95,7 @@
     </div>
 </div>
 
-<div class="fly-footer">
-    <p><a href="http://fly.layui.com/" target="_blank">Fly社区</a> 2017 &copy; <a href="http://www.layui.com/"
-                                                                                target="_blank">layui.com 出品</a></p>
-    <p>
-        <a href="http://fly.layui.com/jie/3147/" target="_blank">付费计划</a>
-        <a href="http://www.layui.com/template/fly/" target="_blank">获取Fly社区模版</a>
-        <a href="http://fly.layui.com/jie/2461/" target="_blank">微信公众号</a>
-    </p>
-</div>
+<div id="footer"></div>
 
 <!--文章标题和内容模板-->
 <script id="articleTpl" type="text/html">
@@ -146,9 +108,26 @@
             <span class="layui-badge layui-bg-black">置顶</span>
             {{# }}}
             {{ d.create == null ? "" : '<span class="layui-badge">文章发布于: ' + d.create + '</span>' }}
+
+            {{# if(d.isCollection == false){ }}
+            <button class="layui-btn layui-btn-xs jie-admin" id="collectionThis">收藏</button>
+            {{# } else { }}
+            <button class="layui-btn layui-btn-xs jie-admin layui-btn-disabled" disabled>已收藏</button>
+            {{# } }}
+
+            {{# if(d.section.secUserId == (layui.data("userInfo").user==null?-1:layui.data("userInfo").user.userId) ){
+            }}
+            {{# if(d.isTop == 1){ }}
+            <span class="layui-btn layui-btn-xs jie-admin" id="unTopThis">取消置顶</span>
+            {{# }else{ }}
+            <span class="layui-btn layui-btn-xs jie-admin" id="topThis">置顶</span>
+            {{# } }}
+            <span class="layui-btn layui-btn-xs jie-admin" id="delThis">删除</span>
+            {{# } }}
+
             <span class="fly-list-nums">
-                <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i> 评论数量 </a>
-                <i class="iconfont" title="人气">&#xe60b;</i> {{ d.artLikeNum }}
+                <a href="#flyReply"><i class="iconfont" title="回答">&#xe60c;</i> {{ d.commentCount }} </a>
+                <i class="iconfont" title="热度">&#xe60b;</i> {{ d.artHotNum }}
             </span>
         </div>
 
@@ -203,18 +182,17 @@
         <div class="fly-panel-main">
             <!--文章的用户信息-->
             <div class="detail-about">
-                <a class="fly-avatar" href="查看用户详情">
+                <a class="fly-avatar" href="http://localhost:8081/html/user/home.html?userId={{d.userId}}">
                     <img src="{{ d.userImg }}" alt="{{ d.userName }}">
                 </a>
                 <div class="fly-detail-user">
-                    <a href="查看用户详情" class="fly-link">
+                    <a href="http://localhost:8081/html/user/home.html?userId={{d.userId}}" class="fly-link">
                         <cite>{{ d.userName }}</cite>
                     </a>
                     <span>{{ d.create }}</span>
                 </div>
                 <div class="detail-hits" id="LAY_jieAdmin" data-id="123">
-                    <span style="padding-right: 10px; color: #FF7200">悬赏：60飞吻</span>
-                    <span class="layui-btn layui-btn-xs jie-admin" type="edit"><a href="add.html">编辑此贴</a></span>
+                    <span class="layui-btn layui-btn-xs jie-admin" id="followThis">关注用户</span>
                 </div>
             </div>
         </div>

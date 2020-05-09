@@ -81,4 +81,18 @@ public class SSOServiceImpl implements SSOService {
 
         return arkResult;
     }
+
+
+    @Override
+    public ArkResult logout(String token) {
+        ArkResult arkResult = null;
+
+        Long del = jedisCluster.del(token);
+        if (!del.equals(0L)) {
+            arkResult = new ArkResult(200, "退出成功");
+            return arkResult;
+        }
+
+        return new ArkResult(-1, "退出失败");
+    }
 }

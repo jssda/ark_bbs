@@ -6,6 +6,7 @@ import org.springframework.util.StringUtils;
 import pers.jssd.ark.beans.ArkResult;
 import pers.jssd.ark.beans.PageNum;
 import pers.jssd.ark.beans.PageResult;
+import pers.jssd.ark.beans.TableResult;
 import pers.jssd.ark.portal.service.IndexService;
 import pers.jssd.ark.rpc.pojo.*;
 import pers.jssd.ark.rpc.service.*;
@@ -26,14 +27,16 @@ public class IndexServiceImpl implements IndexService {
     private final TUserInfoService userInfoService;
     private final TCommentService commentService;
     private final TMessageService messageService;
+    private final TCollectionService collectionService;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    public IndexServiceImpl(TSectionService sectionService, TArticleService articleService, TUserInfoService userInfoService, TCommentService commentService, TMessageService messageService) {
+    public IndexServiceImpl(TSectionService sectionService, TArticleService articleService, TUserInfoService userInfoService, TCommentService commentService, TMessageService messageService, TCollectionService collectionService) {
         this.sectionService = sectionService;
         this.articleService = articleService;
         this.userInfoService = userInfoService;
         this.commentService = commentService;
         this.messageService = messageService;
+        this.collectionService = collectionService;
     }
 
     @Override
@@ -263,5 +266,86 @@ public class IndexServiceImpl implements IndexService {
             pageResult.setMsg("查询成功");
         }
         return pageResult;
+    }
+
+    @Override
+    public ArkResult collectionThis(Integer artId, TUserInfo loginUser) {
+        ArkResult arkResult = null;
+        TCollection collection = new TCollection();
+        collection.setColArtId(artId);
+        collection.setColUserId(loginUser.getUserId());
+        int i = collectionService.insertCollection(collection);
+        if (i == 0) {
+            arkResult = new ArkResult(-1, "收藏失败");
+        } else {
+            arkResult = new ArkResult(200, "收藏成功");
+        }
+        return arkResult;
+    }
+
+    @Override
+    public ArkResult isCollection(Integer artId, Integer userId) {
+        ArkResult arkResult = null;
+        if (userId == null) {
+            arkResult = new ArkResult(-1, "用户未登录");
+        } else {
+            TCollection collection = new TCollection();
+            collection.setColUserId(userId);
+            collection.setColArtId(artId);
+            List<TCollection> collections = collectionService.selectCollectionByArtIdAndUserId(collection);
+            if (collections.size() > 0) {
+                arkResult = new ArkResult(200, "此文章已被收藏");
+            } else {
+                arkResult = new ArkResult(-1, "此文章未被收藏");
+            }
+        }
+
+        return arkResult;
+    }
+
+
+    @Override
+    public ArkResult querySectionBy(String key) {
+        ArkResult arkResult = null;
+        if (key == null) {
+            arkResult = new ArkResult(-1, "查询失败");
+        }
+
+        List<TSection> tSections = sectionService.selectSectionByKey(key);
+        if (tSections != null) {
+            arkResult = new ArkResult(200, "查询成功");
+            arkResult.setData(tSections);
+        }
+        return arkResult;
+    }
+
+    @Override
+    public TableResult listSection(Integer page, Integer limit) {
+        PageNum pageNum = PageUtil.getPageNum(page, limit);
+
+        PageInfo<TSection> tSectionPageInfo = sectionService.selectSectionByPageNum(pageNum);
+        TableResult tableResult = new TableResult();
+        tableResult.setCode(0);
+        tableResult.setMsg("查询成功");
+        tableResult.setData(tSectionPageInfo.getList());
+        tableResult.setCount((int) tSectionPageInfo.getTotal());
+
+        return tableResult;
+    }
+
+    @Override
+    public ArkResult addArticle(TArticle article, TUserInfo loginUser) {
+        if (loginUser == null) {
+            return new ArkResult(-1, "文章添加失败");
+        } else {
+            article.setArtUserId(loginUser.getUserId());
+        }
+        // 添加一个文章
+        int i = articleService.addArticle(article);
+        if (i == 1) {
+            return new ArkResult(200, "文章添加成功");
+        } else {
+            return new ArkResult(-1, "文章添加失败");
+        }
     }
 }

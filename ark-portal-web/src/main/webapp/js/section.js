@@ -20,6 +20,7 @@ layui.config({
     let sectionInfo;
 
     $("#header").load("http://localhost:8081/html/common/header.html");
+    $("#column").load("http://localhost:8081/html/common/column.html");
 
 
     /**
