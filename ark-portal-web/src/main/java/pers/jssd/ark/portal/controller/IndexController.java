@@ -179,4 +179,24 @@ public class IndexController {
         return indexService.listArticleByTopAndPage(page, limit);
     }
 
+    /**
+     * 查询评论最多的10篇文章
+     *
+     * @param secId 板块id, 可为空
+     */
+    @RequestMapping("mostCommentBySecId")
+    public PageResult mostCommentBySecId(@RequestParam(required = false) Integer secId) {
+        return indexService.mostCommentBySecId(secId);
+    }
+
+    /**
+     * 查询热度最高的10篇文章
+     *
+     * @param secId 板块id, 可为空
+     */
+    @RequestMapping("mostHotBySecId")
+    public PageResult mostHotBySecId(@RequestParam(required = false) Integer secId) {
+        return indexService.mostHotBySecId(secId);
+    }
+
 }

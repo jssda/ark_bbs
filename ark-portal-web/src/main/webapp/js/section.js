@@ -4,7 +4,7 @@ layui.config({
 }).extend({
     fly: 'index',
     tag: 'tag'
-}).use(['fly', 'form', 'layer', 'laytpl', 'laypage', 'layedit', 'laydate', 'upload', 'tag'], function () {
+}).use(['fly', 'form', 'layer', 'laytpl', 'laypage', 'layedit', 'laydate','util', 'upload', 'tag'], function () {
     var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         laypage = layui.laypage,
@@ -12,6 +12,7 @@ layui.config({
         layedit = layui.layedit,
         laydate = layui.laydate,
         $ = layui.jquery,
+        util = layui.util,
         laytpl = layui.laytpl,
         tag = layui.tag,
         fly = layui.fly;
@@ -21,6 +22,7 @@ layui.config({
 
     $("#header").load("http://localhost:8081/html/common/header.html");
     $("#column").load("http://localhost:8081/html/common/column.html");
+    $("#rightBar").load("http://localhost:8081/html/common/right-bar.html");
 
 
     /**
@@ -61,10 +63,12 @@ layui.config({
                 let articleList = res.data;
                 articleList.section = sectionInfo;
 
+                layui.each(articleList, function (index, item) {
+                    item.create = getTimeAge(item.create);
+                })
                 // 渲染文章信息
                 let getTpl = $("#arkArticleTpl").html()
                     , view = document.getElementById('arkArticleView');
-
                 laytpl(getTpl).render(articleList, function (html) {
                     view.innerHTML = html;
                 });
@@ -89,4 +93,25 @@ layui.config({
             }
         }
     });
+
+
+    /*'yyyy-MM-dd HH-mm-ss'格式的字符串转日期*/
+    function stringToDate(str) {
+        var tempStrs = str.split(" ");
+        var dateStrs = tempStrs[0].split("-");
+        var year = parseInt(dateStrs[0], 10);
+        var month = parseInt(dateStrs[1], 10) - 1;
+        var day = parseInt(dateStrs[2], 10);
+        var timeStrs = tempStrs[1].split("-");
+        var hour = parseInt(timeStrs [0], 10);
+        var minute = parseInt(timeStrs[1], 10);
+        var second = parseInt(timeStrs[2], 10);
+        var date = new Date(year, month, day, hour, minute, second);
+        return date;
+    }
+
+    function getTimeAge(str) {
+        return util.timeAgo(stringToDate(str));
+    }
+
 });

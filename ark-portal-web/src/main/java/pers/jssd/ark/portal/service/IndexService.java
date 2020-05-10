@@ -102,4 +102,18 @@ public interface IndexService {
      * 分页查询置顶文章
      */
     PageResult listArticleByTopAndPage(Integer page, Integer limit);
+
+    /**
+     * 查询评论最多的10篇文章
+     *
+     * @param secId 板块id
+     */
+    PageResult mostCommentBySecId(Integer secId);
+
+    /**
+     * 查询热度最多的10篇文章
+     *
+     * @param secId 板块id
+     */
+    PageResult mostHotBySecId(Integer secId);
 }

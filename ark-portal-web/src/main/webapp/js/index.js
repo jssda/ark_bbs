@@ -23,6 +23,7 @@ layui.config({
     $("#header").load("http://localhost:8081/html/common/header.html");
     $("#footer").load("http://localhost:8081/html/common/footer.html");
     $("#column").load("http://localhost:8081/html/common/column.html");
+    $("#rightBar").load("http://localhost:8081/html/common/right-bar.html");
 
     let articleCount;
 

@@ -21,6 +21,8 @@ public interface TArticleMapper {
 
     List<TArticle> selectByExample(TArticleExample example);
 
+    List<TArticle> selectByExampleAndOrderByCommentCount(TArticleExample example);
+
     TArticle selectByPrimaryKey(Integer artId);
 
     int updateByExampleSelective(@Param("record") TArticle record, @Param("example") TArticleExample example);

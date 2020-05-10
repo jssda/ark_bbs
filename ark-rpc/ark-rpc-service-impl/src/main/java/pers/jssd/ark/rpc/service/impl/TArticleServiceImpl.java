@@ -291,6 +291,36 @@ public class TArticleServiceImpl implements TArticleService {
     }
 
     @Override
+    public PageInfo<TArticle> selectArticleByPageNumAndSecIdOrderByComment(PageNum pageNum, Integer secId) {
+        PageHelper.startPage(pageNum.getPage(), pageNum.getLimit());
+        TArticleExample articleExample = new TArticleExample();
+        if (secId != null) {
+            TArticleExample.Criteria articleExampleCriteria = articleExample.createCriteria();
+            articleExampleCriteria.andArtSecIdEqualTo(secId);
+        }
+        articleExample.setOrderByClause("b.commentCount desc");
+        List<TArticle> tArticles = articleMapper.selectByExampleAndOrderByCommentCount(articleExample);
+        getCommentCount(tArticles.toArray(new TArticle[0]));
+
+        return new PageInfo<>(tArticles);
+    }
+
+    @Override
+    public PageInfo<TArticle> selectArticleByPageNumAndSecIdOrderByHot(PageNum pageNum, Integer secId) {
+        PageHelper.startPage(pageNum.getPage(), pageNum.getLimit());
+        TArticleExample articleExample = new TArticleExample();
+        if (secId != null) {
+            TArticleExample.Criteria articleExampleCriteria = articleExample.createCriteria();
+            articleExampleCriteria.andArtSecIdEqualTo(secId);
+        }
+        articleExample.setOrderByClause("`art_hot_num` desc");
+        List<TArticle> tArticles = articleMapper.selectByExample(articleExample);
+        getCommentCount(tArticles.toArray(new TArticle[0]));
+
+        return new PageInfo<>(tArticles);
+    }
+
+    @Override
     public TArticle selectArticleByArtId(Integer artId) {
         TArticle article = articleMapper.selectByPrimaryKey(artId);
 

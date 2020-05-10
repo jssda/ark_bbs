@@ -88,4 +88,22 @@ public interface TArticleService {
      * 分页查询置顶文章
      */
     PageInfo<TArticle> selectArticleByPageNumAndTop(PageNum pageNum);
+
+    /**
+     * 分页查询某一板块中的评论最多的文章
+     *
+     * @param pageNum 分页信息
+     * @param secId   板块id
+     * @return 返回按评论排序的文章内容
+     */
+    PageInfo<TArticle> selectArticleByPageNumAndSecIdOrderByComment(PageNum pageNum, Integer secId);
+
+    /**
+     * 分页查询热度最高的文章
+     *
+     * @param pageNum 分页信息
+     * @param secId   板块信息
+     * @return 返回查询到的文章信息
+     */
+    PageInfo<TArticle> selectArticleByPageNumAndSecIdOrderByHot(PageNum pageNum, Integer secId);
 }

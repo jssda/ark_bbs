@@ -362,4 +362,45 @@ public class IndexServiceImpl implements IndexService {
 
         return pageResult;
     }
+
+    @Override
+    public PageResult mostCommentBySecId(Integer secId) {
+        PageResult pageResult = null;
+        PageNum pageNum = PageUtil.getPageNum(1, 10);
+        PageInfo<TArticle> tArticlePageInfo = articleService.selectArticleByPageNumAndSecIdOrderByComment(pageNum, secId);
+        if (tArticlePageInfo.getSize() == 0) {
+            pageResult = new PageResult();
+            pageResult.setCode(200);
+            pageResult.setMsg("没有数据");
+        } else {
+            pageResult = new PageResult();
+            pageResult.setCode(200);
+            pageResult.setCount((int) tArticlePageInfo.getTotal());
+            pageResult.setSize(tArticlePageInfo.getSize());
+            pageResult.setData(tArticlePageInfo.getList());
+            pageResult.setMsg("查询成功");
+        }
+        return pageResult;
+    }
+
+    @Override
+    public PageResult mostHotBySecId(Integer secId) {
+        PageResult pageResult = null;
+        PageNum pageNum = PageUtil.getPageNum(1, 10);
+
+        PageInfo<TArticle> tArticlePageInfo = articleService.selectArticleByPageNumAndSecIdOrderByHot(pageNum, secId);
+        if (tArticlePageInfo.getSize() == 0) {
+            pageResult = new PageResult();
+            pageResult.setCode(200);
+            pageResult.setMsg("没有数据");
+        } else {
+            pageResult = new PageResult();
+            pageResult.setCode(200);
+            pageResult.setCount((int) tArticlePageInfo.getTotal());
+            pageResult.setSize(tArticlePageInfo.getSize());
+            pageResult.setData(tArticlePageInfo.getList());
+            pageResult.setMsg("查询成功");
+        }
+        return pageResult;
+    }
 }
