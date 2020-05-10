@@ -89,6 +89,19 @@ public class TCollectionServiceImpl implements TCollectionService {
         return collectionMapper.selectByExample(collectionExample);
     }
 
+    @Override
+    public PageInfo<TCollection> selectCollectionByPageNumAndUserId(PageNum pageNum, Integer userId) {
+        PageHelper.startPage(pageNum.getPage(), pageNum.getLimit());
+        TCollectionExample collectionExample = new TCollectionExample();
+        TCollectionExample.Criteria collectionExampleCriteria = collectionExample.createCriteria();
+        collectionExampleCriteria.andColUserIdEqualTo(userId);
+
+        List<TCollection> collections = collectionMapper.selectByExample(collectionExample);
+        getArticle(collections.toArray(new TCollection[0]));
+
+        return new PageInfo<>(collections);
+    }
+
     /**
      * 获取收藏表中的文章信息
      *

@@ -116,4 +116,9 @@ public interface IndexService {
      * @param secId 板块id
      */
     PageResult mostHotBySecId(Integer secId);
+
+    /**
+     * 查询登录用户收藏的文章
+     */
+    PageResult listCollectionByUserIdAndPageNum(TUserInfo loginUser, Integer page, Integer limit);
 }

@@ -26,6 +26,8 @@
             <mvc:mapping path="/portal/index/addComment"/>
             <mvc:mapping path="/portal/index/collectionThis/**"/>
             <mvc:mapping path="/portal/index/addArticle"/>
+            <mvc:mapping path="/portal/index/listArticleByLoginUserIdAndPageNum"/>
+            <mvc:mapping path="/portal/index/listCollectionByUserIdAndPageNum"/>
 <!--            <mvc:exclude-mapping path="/index/login"/>-->
             <bean class="pers.jssd.ark.portal.interceptor.LoginInterceptor"/>
         </mvc:interceptor>

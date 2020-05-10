@@ -1,319 +1,340 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pers.jssd.ark.rpc.mapper.TArticleMapper">
-  <resultMap id="BaseResultMap" type="pers.jssd.ark.rpc.pojo.TArticle">
-    <id column="art_id" jdbcType="INTEGER" property="artId" />
-    <result column="art_user_id" jdbcType="INTEGER" property="artUserId" />
-    <result column="art_title" jdbcType="VARCHAR" property="artTitle" />
-    <result column="art_sec_id" jdbcType="INTEGER" property="artSecId" />
-    <result column="art_hot_num" jdbcType="INTEGER" property="artHotNum" />
-    <result column="art_like_num" jdbcType="INTEGER" property="artLikeNum" />
-    <result column="is_top" jdbcType="CHAR" property="isTop" />
-    <result column="create" jdbcType="TIMESTAMP" property="create" />
-    <result column="update" jdbcType="TIMESTAMP" property="update" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="pers.jssd.ark.rpc.pojo.TArticle">
-    <result column="art_content" jdbcType="LONGVARCHAR" property="artContent" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+    <resultMap id="BaseResultMap" type="pers.jssd.ark.rpc.pojo.TArticle">
+        <id column="art_id" jdbcType="INTEGER" property="artId"/>
+        <result column="art_user_id" jdbcType="INTEGER" property="artUserId"/>
+        <result column="art_title" jdbcType="VARCHAR" property="artTitle"/>
+        <result column="art_sec_id" jdbcType="INTEGER" property="artSecId"/>
+        <result column="art_hot_num" jdbcType="INTEGER" property="artHotNum"/>
+        <result column="art_like_num" jdbcType="INTEGER" property="artLikeNum"/>
+        <result column="is_top" jdbcType="CHAR" property="isTop"/>
+        <result column="create" jdbcType="TIMESTAMP" property="create"/>
+        <result column="update" jdbcType="TIMESTAMP" property="update"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="pers.jssd.ark.rpc.pojo.TArticle">
+        <result column="art_content" jdbcType="LONGVARCHAR" property="artContent"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
     art_id, art_user_id, art_title, art_sec_id, art_hot_num, art_like_num, is_top, `create`, 
     `update`
   </sql>
-  <sql id="Blob_Column_List">
+    <sql id="Blob_Column_List">
     art_content
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="pers.jssd.ark.rpc.pojo.TArticleExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from t_article
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByExample" parameterType="pers.jssd.ark.rpc.pojo.TArticleExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from t_article
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from t_article
-    where art_id = #{artId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectByExampleWithBLOBs" parameterType="pers.jssd.ark.rpc.pojo.TArticleExample"
+            resultMap="ResultMapWithBLOBs">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from t_article
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" parameterType="pers.jssd.ark.rpc.pojo.TArticleExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from t_article
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExampleAndOrderByCommentCount" parameterType="pers.jssd.ark.rpc.pojo.TArticleExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from t_article
+        left join (
+        select tc.com_art_id artId, count(*) commentCount from t_comment tc group by tc.com_art_id
+        ) b on b.artId = art_id
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from t_article
+        where art_id = #{artId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_article
     where art_id = #{artId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="pers.jssd.ark.rpc.pojo.TArticleExample">
-    delete from t_article
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="pers.jssd.ark.rpc.pojo.TArticle">
-    <selectKey keyProperty="artId" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_article (art_user_id, art_title, art_sec_id, 
-      art_hot_num, art_like_num, is_top, 
-      `create`, `update`, art_content
-      )
-    values (#{artUserId,jdbcType=INTEGER}, #{artTitle,jdbcType=VARCHAR}, #{artSecId,jdbcType=INTEGER}, 
-      #{artHotNum,jdbcType=INTEGER}, #{artLikeNum,jdbcType=INTEGER}, #{isTop,jdbcType=CHAR}, 
-      #{create,jdbcType=TIMESTAMP}, #{update,jdbcType=TIMESTAMP}, #{artContent,jdbcType=LONGVARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="pers.jssd.ark.rpc.pojo.TArticle">
-    <selectKey keyProperty="artId" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_article
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="artUserId != null">
-        art_user_id,
-      </if>
-      <if test="artTitle != null">
-        art_title,
-      </if>
-      <if test="artSecId != null">
-        art_sec_id,
-      </if>
-      <if test="artHotNum != null">
-        art_hot_num,
-      </if>
-      <if test="artLikeNum != null">
-        art_like_num,
-      </if>
-      <if test="isTop != null">
-        is_top,
-      </if>
-      <if test="create != null">
-        `create`,
-      </if>
-      <if test="update != null">
-        `update`,
-      </if>
-      <if test="artContent != null">
-        art_content,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="artUserId != null">
-        #{artUserId,jdbcType=INTEGER},
-      </if>
-      <if test="artTitle != null">
-        #{artTitle,jdbcType=VARCHAR},
-      </if>
-      <if test="artSecId != null">
-        #{artSecId,jdbcType=INTEGER},
-      </if>
-      <if test="artHotNum != null">
-        #{artHotNum,jdbcType=INTEGER},
-      </if>
-      <if test="artLikeNum != null">
-        #{artLikeNum,jdbcType=INTEGER},
-      </if>
-      <if test="isTop != null">
-        #{isTop,jdbcType=CHAR},
-      </if>
-      <if test="create != null">
-        #{create,jdbcType=TIMESTAMP},
-      </if>
-      <if test="update != null">
-        #{update,jdbcType=TIMESTAMP},
-      </if>
-      <if test="artContent != null">
-        #{artContent,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="pers.jssd.ark.rpc.pojo.TArticleExample" resultType="java.lang.Long">
-    select count(*) from t_article
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update t_article
-    <set>
-      <if test="record.artId != null">
-        art_id = #{record.artId,jdbcType=INTEGER},
-      </if>
-      <if test="record.artUserId != null">
+    <delete id="deleteByExample" parameterType="pers.jssd.ark.rpc.pojo.TArticleExample">
+        delete from t_article
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="pers.jssd.ark.rpc.pojo.TArticle">
+        <selectKey keyProperty="artId" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_article (art_user_id, art_title, art_sec_id,
+        art_hot_num, art_like_num, is_top,
+        `create`, `update`, art_content
+        )
+        values (#{artUserId,jdbcType=INTEGER}, #{artTitle,jdbcType=VARCHAR}, #{artSecId,jdbcType=INTEGER},
+        #{artHotNum,jdbcType=INTEGER}, #{artLikeNum,jdbcType=INTEGER}, #{isTop,jdbcType=CHAR},
+        #{create,jdbcType=TIMESTAMP}, #{update,jdbcType=TIMESTAMP}, #{artContent,jdbcType=LONGVARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="pers.jssd.ark.rpc.pojo.TArticle">
+        <selectKey keyProperty="artId" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="artUserId != null">
+                art_user_id,
+            </if>
+            <if test="artTitle != null">
+                art_title,
+            </if>
+            <if test="artSecId != null">
+                art_sec_id,
+            </if>
+            <if test="artHotNum != null">
+                art_hot_num,
+            </if>
+            <if test="artLikeNum != null">
+                art_like_num,
+            </if>
+            <if test="isTop != null">
+                is_top,
+            </if>
+            <if test="create != null">
+                `create`,
+            </if>
+            <if test="update != null">
+                `update`,
+            </if>
+            <if test="artContent != null">
+                art_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="artUserId != null">
+                #{artUserId,jdbcType=INTEGER},
+            </if>
+            <if test="artTitle != null">
+                #{artTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="artSecId != null">
+                #{artSecId,jdbcType=INTEGER},
+            </if>
+            <if test="artHotNum != null">
+                #{artHotNum,jdbcType=INTEGER},
+            </if>
+            <if test="artLikeNum != null">
+                #{artLikeNum,jdbcType=INTEGER},
+            </if>
+            <if test="isTop != null">
+                #{isTop,jdbcType=CHAR},
+            </if>
+            <if test="create != null">
+                #{create,jdbcType=TIMESTAMP},
+            </if>
+            <if test="update != null">
+                #{update,jdbcType=TIMESTAMP},
+            </if>
+            <if test="artContent != null">
+                #{artContent,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="pers.jssd.ark.rpc.pojo.TArticleExample" resultType="java.lang.Long">
+        select count(*) from t_article
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update t_article
+        <set>
+            <if test="record.artId != null">
+                art_id = #{record.artId,jdbcType=INTEGER},
+            </if>
+            <if test="record.artUserId != null">
+                art_user_id = #{record.artUserId,jdbcType=INTEGER},
+            </if>
+            <if test="record.artTitle != null">
+                art_title = #{record.artTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="record.artSecId != null">
+                art_sec_id = #{record.artSecId,jdbcType=INTEGER},
+            </if>
+            <if test="record.artHotNum != null">
+                art_hot_num = #{record.artHotNum,jdbcType=INTEGER},
+            </if>
+            <if test="record.artLikeNum != null">
+                art_like_num = #{record.artLikeNum,jdbcType=INTEGER},
+            </if>
+            <if test="record.isTop != null">
+                is_top = #{record.isTop,jdbcType=CHAR},
+            </if>
+            <if test="record.create != null">
+                `create` = #{record.create,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.update != null">
+                `update` = #{record.update,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.artContent != null">
+                art_content = #{record.artContent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map">
+        update t_article
+        set art_id = #{record.artId,jdbcType=INTEGER},
         art_user_id = #{record.artUserId,jdbcType=INTEGER},
-      </if>
-      <if test="record.artTitle != null">
         art_title = #{record.artTitle,jdbcType=VARCHAR},
-      </if>
-      <if test="record.artSecId != null">
         art_sec_id = #{record.artSecId,jdbcType=INTEGER},
-      </if>
-      <if test="record.artHotNum != null">
         art_hot_num = #{record.artHotNum,jdbcType=INTEGER},
-      </if>
-      <if test="record.artLikeNum != null">
         art_like_num = #{record.artLikeNum,jdbcType=INTEGER},
-      </if>
-      <if test="record.isTop != null">
         is_top = #{record.isTop,jdbcType=CHAR},
-      </if>
-      <if test="record.create != null">
         `create` = #{record.create,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.update != null">
         `update` = #{record.update,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.artContent != null">
-        art_content = #{record.artContent,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update t_article
-    set art_id = #{record.artId,jdbcType=INTEGER},
-      art_user_id = #{record.artUserId,jdbcType=INTEGER},
-      art_title = #{record.artTitle,jdbcType=VARCHAR},
-      art_sec_id = #{record.artSecId,jdbcType=INTEGER},
-      art_hot_num = #{record.artHotNum,jdbcType=INTEGER},
-      art_like_num = #{record.artLikeNum,jdbcType=INTEGER},
-      is_top = #{record.isTop,jdbcType=CHAR},
-      `create` = #{record.create,jdbcType=TIMESTAMP},
-      `update` = #{record.update,jdbcType=TIMESTAMP},
-      art_content = #{record.artContent,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update t_article
-    set art_id = #{record.artId,jdbcType=INTEGER},
-      art_user_id = #{record.artUserId,jdbcType=INTEGER},
-      art_title = #{record.artTitle,jdbcType=VARCHAR},
-      art_sec_id = #{record.artSecId,jdbcType=INTEGER},
-      art_hot_num = #{record.artHotNum,jdbcType=INTEGER},
-      art_like_num = #{record.artLikeNum,jdbcType=INTEGER},
-      is_top = #{record.isTop,jdbcType=CHAR},
-      `create` = #{record.create,jdbcType=TIMESTAMP},
-      `update` = #{record.update,jdbcType=TIMESTAMP}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="pers.jssd.ark.rpc.pojo.TArticle">
-    update t_article
-    <set>
-      <if test="artUserId != null">
-        art_user_id = #{artUserId,jdbcType=INTEGER},
-      </if>
-      <if test="artTitle != null">
-        art_title = #{artTitle,jdbcType=VARCHAR},
-      </if>
-      <if test="artSecId != null">
-        art_sec_id = #{artSecId,jdbcType=INTEGER},
-      </if>
-      <if test="artHotNum != null">
-        art_hot_num = #{artHotNum,jdbcType=INTEGER},
-      </if>
-      <if test="artLikeNum != null">
-        art_like_num = #{artLikeNum,jdbcType=INTEGER},
-      </if>
-      <if test="isTop != null">
-        is_top = #{isTop,jdbcType=CHAR},
-      </if>
-      <if test="create != null">
-        `create` = #{create,jdbcType=TIMESTAMP},
-      </if>
-      <if test="update != null">
-        `update` = #{update,jdbcType=TIMESTAMP},
-      </if>
-      <if test="artContent != null">
-        art_content = #{artContent,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where art_id = #{artId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="pers.jssd.ark.rpc.pojo.TArticle">
+        art_content = #{record.artContent,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update t_article
+        set art_id = #{record.artId,jdbcType=INTEGER},
+        art_user_id = #{record.artUserId,jdbcType=INTEGER},
+        art_title = #{record.artTitle,jdbcType=VARCHAR},
+        art_sec_id = #{record.artSecId,jdbcType=INTEGER},
+        art_hot_num = #{record.artHotNum,jdbcType=INTEGER},
+        art_like_num = #{record.artLikeNum,jdbcType=INTEGER},
+        is_top = #{record.isTop,jdbcType=CHAR},
+        `create` = #{record.create,jdbcType=TIMESTAMP},
+        `update` = #{record.update,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="pers.jssd.ark.rpc.pojo.TArticle">
+        update t_article
+        <set>
+            <if test="artUserId != null">
+                art_user_id = #{artUserId,jdbcType=INTEGER},
+            </if>
+            <if test="artTitle != null">
+                art_title = #{artTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="artSecId != null">
+                art_sec_id = #{artSecId,jdbcType=INTEGER},
+            </if>
+            <if test="artHotNum != null">
+                art_hot_num = #{artHotNum,jdbcType=INTEGER},
+            </if>
+            <if test="artLikeNum != null">
+                art_like_num = #{artLikeNum,jdbcType=INTEGER},
+            </if>
+            <if test="isTop != null">
+                is_top = #{isTop,jdbcType=CHAR},
+            </if>
+            <if test="create != null">
+                `create` = #{create,jdbcType=TIMESTAMP},
+            </if>
+            <if test="update != null">
+                `update` = #{update,jdbcType=TIMESTAMP},
+            </if>
+            <if test="artContent != null">
+                art_content = #{artContent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where art_id = #{artId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="pers.jssd.ark.rpc.pojo.TArticle">
     update t_article
     set art_user_id = #{artUserId,jdbcType=INTEGER},
       art_title = #{artTitle,jdbcType=VARCHAR},
@@ -326,7 +347,7 @@
       art_content = #{artContent,jdbcType=LONGVARCHAR}
     where art_id = #{artId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="pers.jssd.ark.rpc.pojo.TArticle">
+    <update id="updateByPrimaryKey" parameterType="pers.jssd.ark.rpc.pojo.TArticle">
     update t_article
     set art_user_id = #{artUserId,jdbcType=INTEGER},
       art_title = #{artTitle,jdbcType=VARCHAR},

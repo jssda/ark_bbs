@@ -121,6 +121,14 @@ public class IndexController {
     }
 
     /**
+     * 查询登录用户近期发布的帖子
+     */
+    @RequestMapping("listArticleByLoginUserIdAndPageNum")
+    public PageResult listArticleByLoginUserIdAndPageNum(@RequestAttribute TUserInfo loginUser, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "5") Integer limit) {
+        return indexService.listArticleByUserIdAndPageNum(loginUser.getUserId(), page, limit);
+    }
+
+    /**
      * 收藏一篇文章
      */
     @RequestMapping("collectionThis/{artId}")
@@ -197,6 +205,14 @@ public class IndexController {
     @RequestMapping("mostHotBySecId")
     public PageResult mostHotBySecId(@RequestParam(required = false) Integer secId) {
         return indexService.mostHotBySecId(secId);
+    }
+
+    /**
+     * 查询登录用户收藏的文章
+     */
+    @RequestMapping("listCollectionByUserIdAndPageNum")
+    public PageResult listCollectionByUserIdAndPageNum(@RequestAttribute TUserInfo loginUser, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "5") Integer limit) {
+        return indexService.listCollectionByUserIdAndPageNum(loginUser, page, limit);
     }
 
 }

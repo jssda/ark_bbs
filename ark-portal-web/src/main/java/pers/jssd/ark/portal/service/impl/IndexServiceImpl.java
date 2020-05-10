@@ -403,4 +403,30 @@ public class IndexServiceImpl implements IndexService {
         }
         return pageResult;
     }
+
+    @Override
+    public PageResult listCollectionByUserIdAndPageNum(TUserInfo loginUser, Integer page, Integer limit) {
+        PageResult pageResult = null;
+        if (loginUser == null) {
+            pageResult = new PageResult();
+            pageResult.setCount(-1);
+            pageResult.setMsg("用户没有登录");
+        } else {
+            PageNum pageNum = PageUtil.getPageNum(page, limit);
+            PageInfo<TCollection> collectionPageInfo = collectionService.selectCollectionByPageNumAndUserId(pageNum, loginUser.getUserId());
+            if (collectionPageInfo.getSize() == 0) {
+                pageResult = new PageResult();
+                pageResult.setCode(200);
+                pageResult.setMsg("没有数据");
+            } else {
+                pageResult = new PageResult();
+                pageResult.setCode(200);
+                pageResult.setMsg("查询成功");
+                pageResult.setCount((int) collectionPageInfo.getTotal());
+                pageResult.setSize(collectionPageInfo.getSize());
+                pageResult.setData(collectionPageInfo.getList());
+            }
+        }
+        return pageResult;
+    }
 }

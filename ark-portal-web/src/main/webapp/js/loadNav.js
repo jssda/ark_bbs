@@ -1,10 +1,4 @@
-layui.config({
-    version: "3.0.0"
-    , base: '../../res/mods/' //这里实际使用时，建议改成绝对路径
-}).extend({
-    cookie: 'cookie',
-    fly: 'index'
-}).use(['element', 'jquery'], function () {
+layui.use(['element', 'jquery'], function () {
     var $ = layui.jquery,
         cookie = layui.cookie,
         fly = layui.fly,

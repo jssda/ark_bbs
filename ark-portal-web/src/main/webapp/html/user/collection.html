@@ -22,35 +22,12 @@
             </ul>
             <div class="layui-tab-content" style="padding: 20px 0;">
                 <div class="layui-tab-item layui-show">
-                    <ul class="mine-view jie-row">
-                        <li>
-                            <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
-                            <i>2017/3/14 上午8:30:00</i>
-                            <a class="mine-edit" href="/jie/edit/8116">编辑</a>
-                            <em>661阅/10答</em>
-                        </li>
-                        <li>
-                            <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
-                            <i>2017/3/14 上午8:30:00</i>
-                            <a class="mine-edit" href="/jie/edit/8116">编辑</a>
-                            <em>661阅/10答</em>
-                        </li>
-                        <li>
-                            <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
-                            <i>2017/3/14 上午8:30:00</i>
-                            <a class="mine-edit" href="/jie/edit/8116">编辑</a>
-                            <em>661阅/10答</em>
-                        </li>
-                    </ul>
-                    <div id="LAY_page"></div>
+                    <div id="myPublicView"></div>
+                    <div id="publicPage" style="text-align: center"></div>
                 </div>
                 <div class="layui-tab-item">
-                    <ul class="mine-view jie-row">
-                        <li>
-                            <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
-                            <i>收藏于23小时前</i></li>
-                    </ul>
-                    <div id="LAY_page1"></div>
+                    <div id="myCollectionView"></div>
+                    <div id="collectionPage" style="text-align: center"></div>
                 </div>
             </div>
         </div>
@@ -59,8 +36,43 @@
 
 <div id="footer"></div>
 
+<script type="text/html" id="myPublicTpl">
+    {{# if(JSON.stringify(d)==="{}"){ }}
+    <!-- 无数据时 -->
+    <div class="fly-none">没有相关数据</div>
+    {{# } else { }}
+    <ul class="mine-view jie-row">
+        {{# layui.each(d, function(index, item){ }}
+        <li>
+            <a class="jie-title" href="http://localhost:8081/html/jie/detail.html?artId={{ item.artId }}"
+               target="_blank">{{ item.artTitle }}</a>
+            <i>{{ item.create }}</i>
+            <em>{{ item.artHotNum }}阅</em>
+        </li>
+        {{# }) }}
+    </ul>
+    {{# } }}
+</script>
+<script type="text/html" id="myCollectionTpl">
+    {{# if(JSON.stringify(d)==="{}"){ }}
+    <!-- 无数据时 -->
+    <div class="fly-none">没有相关数据</div>
+    {{# } else { }}
+    <ul class="mine-view jie-row">
+        {{# layui.each(d, function(index, item){ }}
+        <li>
+            <a class="jie-title" href="http://localhost:8081/html/jie/detail.html?artId={{ item.article.artId }}"
+               target="_blank">{{item.article.artTitle}}</a>
+            <i>{{ item.create }}</i>
+        </li>
+        {{# }) }}
+    </ul>
+    {{# } }}
+</script>
+
 <script src="../../res/layui/layui.js"></script>
 <script src="http://localhost:8081/js/loadNav.js"></script>
+<script src="http://localhost:8081/js/collection.js"></script>
 
 </body>
 </html>

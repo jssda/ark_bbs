@@ -51,4 +51,12 @@ public interface TCollectionService {
      */
     List<TCollection> selectCollectionByArtIdAndUserId(TCollection collection);
 
+    /**
+     * 查询指定用户的收藏文章信息
+     *
+     * @return 返回查询到的收藏信息
+     */
+    PageInfo<TCollection> selectCollectionByPageNumAndUserId(PageNum pageNum, Integer userId);
+
+
 }

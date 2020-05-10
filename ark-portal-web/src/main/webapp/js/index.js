@@ -51,7 +51,6 @@ layui.config({
     }
 
     listSection(1, 5);
-
     //执行一个laypage实例
     laypage.render({
         elem: 'articlePage' //注意，这里的 test1 是 ID，不用加 # 号
