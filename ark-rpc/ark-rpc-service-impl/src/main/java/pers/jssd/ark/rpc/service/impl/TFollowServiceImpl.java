@@ -34,7 +34,7 @@ public class TFollowServiceImpl implements TFollowService {
         TFollowExample followExample = new TFollowExample();
         TFollowExample.Criteria followExampleCriteria = followExample.createCriteria();
         followExampleCriteria.andFollowUserIdEqualTo(loginUserId);
-        List<TFollow> tFollows = followMapper.selectByExample(followExample);
+        List<TFollow> tFollows = followMapper.selectByExampleWithBLOBs(followExample);
         if (tFollows != null && tFollows.size() != 0) { // 有粉丝关系, 改变关系即可
             TFollow follow = tFollows.get(0);
             String followUserJson = follow.getFollowUser();
@@ -42,8 +42,6 @@ public class TFollowServiceImpl implements TFollowService {
             if (!StringUtil.isEmpty(followUserJson)) {
                 tUserInfos = JsonUtil.jsonToList(followUserJson, TUserInfo.class);
             }
-
-            System.out.println("userInfos = " + tUserInfos);
 
             // 查询要关注的用户信息
             TUserInfo userInfo = userInfoMapper.selectByPrimaryKey(userId);
@@ -89,7 +87,7 @@ public class TFollowServiceImpl implements TFollowService {
         TFollowExample followExample = new TFollowExample();
         TFollowExample.Criteria followExampleCriteria = followExample.createCriteria();
         followExampleCriteria.andFollowUserIdEqualTo(loginUserId);
-        List<TFollow> tFollows = followMapper.selectByExample(followExample);
+        List<TFollow> tFollows = followMapper.selectByExampleWithBLOBs(followExample);
         if (tFollows != null && tFollows.size() != 0) { // 有粉丝关系, 改变关系即可
             TFollow follow = tFollows.get(0);
             String followrJson = follow.getFollowr();
@@ -133,7 +131,7 @@ public class TFollowServiceImpl implements TFollowService {
         TFollowExample followExample = new TFollowExample();
         TFollowExample.Criteria criteria = followExample.createCriteria();
         criteria.andFollowUserIdEqualTo(loginUserId);
-        List<TFollow> tFollows = followMapper.selectByExample(followExample);
+        List<TFollow> tFollows = followMapper.selectByExampleWithBLOBs(followExample);
         if (tFollows == null || tFollows.size() == 0) {
             return false;
         } else {

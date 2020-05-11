@@ -37,6 +37,7 @@ layui.config({
                     }
                     $.ajax({
                         url:"http://localhost:8081/portal/index/isFollow/" + data.userId,
+                        async:false,
                         success:function (res) {
                             if (res.code == 200) {
                                 data.isMe = 1;
@@ -85,6 +86,7 @@ layui.config({
     // 添加关注
     $(document).on('click', '#followThis', function () {
         let userId = $(this).attr("lay-data");
+        layer.alert(userId);
         $.ajax({
             url:"http://localhost:8081/portal/index/followThis/" + userId,
             success:function (res) {
