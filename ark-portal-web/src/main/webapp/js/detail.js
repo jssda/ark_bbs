@@ -259,5 +259,88 @@ layui.config({
             }
         })
     })
+
+    // 置顶
+    $(document).on('click', '#topThis', function () {
+        $.ajax({
+            url: "http://localhost:8081/portal/index/topThis/" + article.artId,
+            success: function (res) {
+                layer.msg(res.msg);
+                if (res.code === 200) {
+                    location.reload();
+                }
+            },
+            complete: function (xhr, ts) {
+                if ((xhr.status >= 300 && xhr.status < 400) && xhr.status !== 304) {
+                    //重定向网址在响应头中，取出再执行跳转
+                    let redirectUrl = xhr.getResponseHeader('redirectUrl');
+                    let localUrl = location.href;
+                    location.href = redirectUrl + '?redirectUrl=' + localUrl;
+                }
+            }
+        })
+    })
+
+    // 取消置顶
+    $(document).on('click', '#unTopThis', function () {
+        $.ajax({
+            url: "http://localhost:8081/portal/index/unTopThis/" + article.artId,
+            success: function (res) {
+                layer.msg(res.msg);
+                if (res.code === 200) {
+                    location.reload();
+                }
+            },
+            complete: function (xhr, ts) {
+                if ((xhr.status >= 300 && xhr.status < 400) && xhr.status !== 304) {
+                    //重定向网址在响应头中，取出再执行跳转
+                    let redirectUrl = xhr.getResponseHeader('redirectUrl');
+                    let localUrl = location.href;
+                    location.href = redirectUrl + '?redirectUrl=' + localUrl;
+                }
+            }
+        })
+    })
+
+    // 删除此文章
+    $(document).on('click', '#delThis', function () {
+        $.ajax({
+            url: "http://localhost:8081/portal/index/delThis/" + article.artId,
+            success: function (res) {
+                layer.msg(res.msg);
+                if (res.code === 200) {
+                    location.href = "http://localhost:8081";
+                }
+            },
+            complete: function (xhr, ts) {
+                if ((xhr.status >= 300 && xhr.status < 400) && xhr.status !== 304) {
+                    //重定向网址在响应头中，取出再执行跳转
+                    let redirectUrl = xhr.getResponseHeader('redirectUrl');
+                    let localUrl = location.href;
+                    location.href = redirectUrl + '?redirectUrl=' + localUrl;
+                }
+            }
+        })
+    })
+
+
+    let secId = layui.url().search.secId;
+    // 查询评论最多的10篇文章
+    $.ajax({
+        url:"http://localhost:8081/portal/index/mostCommentBySecId",
+        data:{secId: secId},
+        success:function (res) {
+            let data = res.data;
+            if (data == null) {
+                data = {}
+            }
+
+            let tpl = $("#mostCommentTpl").html();
+            laytpl(tpl).render(data, function (html) {
+                $("#mostCommentView").html(html);
+            });
+        }
+    })
+
 });
 

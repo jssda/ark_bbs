@@ -105,7 +105,7 @@ public class IndexController {
     }
 
     /**
-     * 添加一个一级评论
+     * 添加一个评论
      */
     @RequestMapping("addComment")
     public ArkResult addComment(HttpServletRequest request) {
@@ -134,6 +134,30 @@ public class IndexController {
     @RequestMapping("collectionThis/{artId}")
     public ArkResult collectionThis(@PathVariable Integer artId, @RequestAttribute TUserInfo loginUser) {
         return indexService.collectionThis(artId, loginUser);
+    }
+
+    /**
+     * 置顶此文章
+     */
+    @RequestMapping("topThis/{artId}")
+    public ArkResult topThis(@PathVariable Integer artId) {
+        return indexService.topThis(artId);
+    }
+
+    /**
+     * 取消置顶此文章
+     */
+    @RequestMapping("unTopThis/{artId}")
+    public ArkResult unTopThis(@PathVariable Integer artId) {
+        return indexService.unTopThis(artId);
+    }
+
+    /**
+     * 删除此文章
+     */
+    @RequestMapping("delThis/{artId}")
+    public ArkResult delThis(@PathVariable Integer artId) {
+        return indexService.delThis(artId);
     }
 
     /**
@@ -213,6 +237,45 @@ public class IndexController {
     @RequestMapping("listCollectionByUserIdAndPageNum")
     public PageResult listCollectionByUserIdAndPageNum(@RequestAttribute TUserInfo loginUser, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "5") Integer limit) {
         return indexService.listCollectionByUserIdAndPageNum(loginUser, page, limit);
+    }
+
+    /**
+     * 获取登录的用户信息
+     *
+     * @param loginUser 登录的用户
+     */
+    @RequestMapping("getLoginUserInfo")
+    public ArkResult getLoginUserInfo(@RequestAttribute TUserInfo loginUser) {
+        ArkResult arkResult = new ArkResult(200);
+        arkResult.setData(loginUser);
+        return arkResult;
+    }
+
+    /**
+     * 修改用户信息
+     *
+     * @param userInfo 需要修改的用户信息
+     * @return 返回是否修改成功
+     */
+    @RequestMapping("modifyUserInfo")
+    public ArkResult modifyUserInfo(TUserInfo userInfo) {
+        return indexService.modifyUserInfo(userInfo);
+    }
+
+    /**
+     * 修改用户密码
+     */
+    @RequestMapping("modifyPass")
+    public ArkResult modifyPass(@RequestAttribute TUserInfo loginUser, @RequestParam(name = "nowpass") String nowPass, String pass) {
+        return indexService.modifyPass(loginUser, nowPass, pass);
+    }
+
+    /**
+     * 取消收藏这个文章
+     */
+    @RequestMapping("unCollection")
+    public ArkResult unCollection(@RequestAttribute TUserInfo loginUser, Integer colId) {
+        return indexService.unCollection(loginUser, colId);
     }
 
 }

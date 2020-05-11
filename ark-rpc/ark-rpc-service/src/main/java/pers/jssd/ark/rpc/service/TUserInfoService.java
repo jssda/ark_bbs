@@ -83,4 +83,14 @@ public interface TUserInfoService {
      * @return 返回查询到的用户
      */
     TUserInfo selectUserInfoByUserName(String userName);
+
+    /**
+     * 检查邮箱是否可用
+     */
+    List<TUserInfo> selectUserInfoByEmail(String email);
+
+    /**
+     * 检查手机号是否可用
+     */
+    List<TUserInfo> selectUserInfoByTelephone(String telephone);
 }

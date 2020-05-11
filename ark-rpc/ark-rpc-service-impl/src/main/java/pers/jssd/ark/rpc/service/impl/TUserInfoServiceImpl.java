@@ -99,7 +99,7 @@ public class TUserInfoServiceImpl implements TUserInfoService {
         TUserInfoExample.Criteria criteria = userInfoExample.createCriteria();
         criteria.andUserNameEqualTo(userName);
         List<TUserInfo> tUserInfos = userInfoMapper.selectByExample(userInfoExample);
-        if (tUserInfos != null) {
+        if (tUserInfos != null && tUserInfos.size() != 0) {
             return tUserInfos.get(0);
         }
         return null;
@@ -128,5 +128,24 @@ public class TUserInfoServiceImpl implements TUserInfoService {
         criteria.andUserIdIn(usersId);
 
         return userInfoMapper.deleteByExample(userInfoExample);
+    }
+
+    @Override
+    public List<TUserInfo> selectUserInfoByEmail(String email) {
+        TUserInfoExample userInfoExample = new TUserInfoExample();
+        TUserInfoExample.Criteria criteria = userInfoExample.createCriteria();
+        criteria.andEmailEqualTo(email);
+
+        return userInfoMapper.selectByExample(userInfoExample);
+    }
+
+
+    @Override
+    public List<TUserInfo> selectUserInfoByTelephone(String telephone) {
+        TUserInfoExample userInfoExample = new TUserInfoExample();
+        TUserInfoExample.Criteria criteria = userInfoExample.createCriteria();
+        criteria.andTelephoneEqualTo(telephone);
+
+        return userInfoMapper.selectByExample(userInfoExample);
     }
 }

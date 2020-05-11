@@ -226,7 +226,7 @@ public class IndexServiceImpl implements IndexService {
                 // 添加一条消息
                 TMessage message = new TMessage();
                 message.setMesTitle("评论信息");
-                message.setMesContent("有人对你回复了");
+                message.setMesContent(artId);
                 message.setFromUserId(loginUser.getUserId());
                 message.setToUserId(toUserId);
                 message.setMesType("0");
@@ -428,5 +428,117 @@ public class IndexServiceImpl implements IndexService {
             }
         }
         return pageResult;
+    }
+
+    @Override
+    public ArkResult modifyUserInfo(TUserInfo userInfo) {
+        ArkResult arkResult = null;
+        int i = userInfoService.updateUserInfo(userInfo);
+        if (i == 0) {
+            arkResult = new ArkResult(-1, "用户信息更改失败");
+        } else {
+            arkResult = new ArkResult(200, "用户信息更新成功");
+        }
+
+        return arkResult;
+    }
+
+    @Override
+    public ArkResult modifyPass(TUserInfo loginUser, String nowPass, String pass) {
+        ArkResult arkResult = null;
+        if (loginUser == null) {
+            arkResult = new ArkResult(-1, "修改失败");
+        } else {
+            String password = loginUser.getPassword();
+            if (password.equals(nowPass)) {
+                TUserInfo userInfo = new TUserInfo();
+                userInfo.setUserId(loginUser.getUserId());
+                userInfo.setPassword(pass);
+                int i = userInfoService.updateUserInfo(userInfo);
+                if (i == 0) {
+                    arkResult = new ArkResult(-1, "修改失败");
+                } else {
+                    arkResult = new ArkResult(200, "密码修改成功");
+                }
+            } else {
+                arkResult = new ArkResult(-1, "当前密码不正确");
+            }
+        }
+
+        return arkResult;
+    }
+
+    @Override
+    public ArkResult unCollection(TUserInfo loginUser, Integer colId) {
+        ArkResult arkResult = null;
+        if (loginUser == null || colId == null) {
+            arkResult = new ArkResult(-1, "取消收藏失败");
+        } else {
+            int i = collectionService.deleteCollection(colId);
+            if (i == 0) {
+                arkResult = new ArkResult(-1, "取消收藏失败");
+            } else {
+                arkResult = new ArkResult(200, "取消收藏成功");
+            }
+        }
+
+        return arkResult;
+    }
+
+    @Override
+    public ArkResult topThis(Integer artId) {
+        ArkResult arkResult = null;
+        if (artId == null) {
+            arkResult = new ArkResult(-1, "置顶失败");
+        } else {
+            TArticle article = new TArticle();
+            article.setArtId(artId);
+            article.setIsTop("1");
+            int i = articleService.modifyArticle(article);
+            if (i == 0) {
+                arkResult = new ArkResult(-1, "置顶失败");
+            } else {
+                arkResult = new ArkResult(200, "置顶成功");
+            }
+        }
+
+        return arkResult;
+    }
+
+    @Override
+    public ArkResult unTopThis(Integer artId) {
+        ArkResult arkResult = null;
+        if (artId == null) {
+            arkResult = new ArkResult(-1, "取消置顶失败");
+        } else {
+            TArticle article = new TArticle();
+            article.setArtId(artId);
+            article.setIsTop("0");
+            int i = articleService.modifyArticle(article);
+            if (i == 0) {
+                arkResult = new ArkResult(-1, "取消置顶失败");
+            } else {
+                arkResult = new ArkResult(200, "取消置顶成功");
+            }
+        }
+
+        return arkResult;
+    }
+
+    @Override
+    public ArkResult delThis(Integer artId) {
+        ArkResult arkResult = null;
+        if (artId == null) {
+            arkResult = new ArkResult(-1, "删除失败");
+        } else {
+            int i = articleService.deleteArticle(artId);
+            if (i == 0) {
+                arkResult = new ArkResult(-1, "删除失败");
+            } else {
+                arkResult = new ArkResult(200, "删除成功");
+            }
+        }
+
+        return arkResult;
     }
 }

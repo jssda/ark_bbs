@@ -17,11 +17,18 @@ layui.use(['form', 'layer', 'jquery'], function () {
         $.ajax({
             url: "http://localhost:8083/sso/login",
             data: data.field,
+            type:"POST",
             async: false,
             success: function (res) {
                 if (res.code == 200) {
                     top.layer.msg(res.msg);
                     location.href = redirectUrl;
+                } else {
+                    layer.msg(res.msg);
+
+                    setTimeout(function (){
+                        window.location.reload();
+                    }, 2000);
                 }
             }
         })

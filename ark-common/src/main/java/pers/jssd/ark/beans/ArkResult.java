@@ -30,6 +30,9 @@ public class ArkResult {
         this.msg = msg;
     }
 
+    public ArkResult() {
+    }
+
     public static ArkResult ok() {
         return new ArkResult(200);
     }

@@ -12,6 +12,8 @@ import redis.clients.jedis.JedisCluster;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -57,7 +59,7 @@ public class SSOServiceImpl implements SSOService {
             }
         }
 
-        return new ArkResult(200, "用户登录失败");
+        return new ArkResult(-1, "用户登录失败");
     }
 
 
@@ -94,5 +96,78 @@ public class SSOServiceImpl implements SSOService {
         }
 
         return new ArkResult(-1, "退出失败");
+    }
+
+    @Override
+    public ArkResult checkUserName(String userName) {
+        ArkResult arkResult = null;
+        if (userName == null) {
+            arkResult = new ArkResult(-1,"用户名为空");
+        } else {
+            TUserInfo userInfo = userInfoService.selectUserInfoByUserName(userName);
+            if (userInfo != null) {
+                arkResult = new ArkResult(-1, "用户名重复");
+            } else {
+                arkResult = new ArkResult(200, "用户名正常");
+            }
+        }
+
+        return arkResult;
+    }
+
+    @Override
+    public ArkResult checkEmail(String email) {
+        ArkResult arkResult = null;
+        if (email == null) {
+            arkResult = new ArkResult(-1,"邮箱为空");
+        } else {
+            List<TUserInfo> userInfos = userInfoService.selectUserInfoByEmail(email);
+            if (userInfos == null || userInfos.size() > 0) {
+                arkResult = new ArkResult(-1, "邮箱已注册");
+            } else {
+                arkResult = new ArkResult(200, "邮箱可使用");
+            }
+        }
+
+        return arkResult;
+    }
+
+    @Override
+    public ArkResult checkTelephone(String telephone) {
+        ArkResult arkResult = null;
+        if (telephone == null) {
+            arkResult = new ArkResult(-1,"手机号为空");
+        } else {
+            List<TUserInfo> userInfos = userInfoService.selectUserInfoByTelephone(telephone);
+            if (userInfos == null || userInfos.size() > 0) {
+                arkResult = new ArkResult(-1, "手机号已注册");
+            } else {
+                arkResult = new ArkResult(200, "手机号可使用");
+            }
+        }
+
+        return arkResult;
+    }
+
+    @Override
+    public ArkResult register(TUserInfo userInfo) {
+        ArkResult arkResult = null;
+        if (userInfo == null) {
+            arkResult = new ArkResult(-1, "用户注册失败");
+        } else {
+            userInfo.setUserSex("1");
+            userInfo.setCredit(1);
+            userInfo.setUserLevel("1");
+            userInfo.setUsed("0");
+            userInfo.setCreate(new Date());
+            int i = userInfoService.addUserInfo(userInfo);
+            if (i == 0) {
+                arkResult = new ArkResult(-1, "用户注册失败");
+            } else {
+                arkResult = new ArkResult(200, "用户注册成功");
+            }
+        }
+
+        return arkResult;
     }
 }

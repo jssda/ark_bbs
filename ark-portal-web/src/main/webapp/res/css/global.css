@@ -111,6 +111,7 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .fly-marginTop{margin-top: 15px;}
 .fly-mid{display: inline-block; height: 10px; width: 1px; margin: 0 10px; vertical-align: middle; background-color: #e2e2e2;}
 .fly-right{position: absolute; right: 15px; top: 0;}
+.fly-left{position: absolute; left: 15px; top: 0;}
 
 /* 过度 */
 .fly-loading{position: absolute; top: 50%; left: 50%; margin: -12px 0 0 -15px; font-size: 30px; color: #c2c2c2;}
@@ -496,7 +497,7 @@ body .fly-user-main{position: relative; min-height: 600px;}
 .fly-link a{line-height: 24px; padding-right: 15px;}
 
 /* 404或提示 */
-.fly-none{min-height: 600px; text-align: center; padding-top:50px; color: #999;}
+.fly-none {min-height: 600px; text-align: center; padding-top:50px; color: #999;}
 .fly-none .iconfont{line-height: 300px; font-size: 300px; color: #393D49;}
 .fly-none .icon-tishilian{display: inline-block; margin: 30px 0 20px;}
 .fly-none p{margin-top: 50px; padding: 0 15px; font-size: 20px; color: #999; font-weight: 300;}

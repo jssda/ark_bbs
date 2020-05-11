@@ -121,4 +121,41 @@ public interface IndexService {
      * 查询登录用户收藏的文章
      */
     PageResult listCollectionByUserIdAndPageNum(TUserInfo loginUser, Integer page, Integer limit);
+
+    /**
+     * 修改用户信息
+     *
+     * @param userInfo 需要修改的用户信息
+     * @return 返回是否修改成功的响应信息
+     */
+    ArkResult modifyUserInfo(TUserInfo userInfo);
+
+    /**
+     * 修改密码
+     *
+     * @param loginUser 当前登录用户
+     * @param nowPass   当前密码
+     * @param pass      修改密码
+     */
+    ArkResult modifyPass(TUserInfo loginUser, String nowPass, String pass);
+
+    /**
+     * 取消收藏这个文章
+     */
+    ArkResult unCollection(TUserInfo loginUser, Integer colId);
+
+    /**
+     * 置顶一篇文章
+     */
+    ArkResult topThis(Integer artId);
+
+    /**
+     * 取消置顶
+     */
+    ArkResult unTopThis(Integer artId);
+
+    /**
+     * 删除指定的文章
+     */
+    ArkResult delThis(Integer artId);
 }

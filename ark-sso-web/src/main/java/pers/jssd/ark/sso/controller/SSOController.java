@@ -8,6 +8,7 @@ import pers.jssd.ark.sso.service.SSOService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.geom.Area;
 
 /**
  * 单点登录请求处理
@@ -46,6 +47,47 @@ public class SSOController {
     @RequestMapping("logout")
     public ArkResult logout(String token) {
         return ssoService.logout(token);
+    }
+
+    /**
+     * 检查用户名是否重复
+     *
+     * @param userName 用户名
+     * @return 返回响应结果
+     */
+    @RequestMapping("checkUserName")
+    public ArkResult checkUserName(String userName) {
+        return ssoService.checkUserName(userName);
+    }
+
+    /**
+     * 检测邮箱是否注册
+     *
+     * @param email 邮箱
+     * @return 返回响应结果
+     */
+    @RequestMapping("checkEmail")
+    public ArkResult checkEmail(String email) {
+        return ssoService.checkEmail(email);
+    }
+
+    /**
+     * 检查手机号是否注册
+     *
+     * @param telephone 手机号
+     * @return 返回响应信息
+     */
+    @RequestMapping("checkTelephone")
+    public ArkResult checkTelephone(String telephone) {
+        return ssoService.checkTelephone(telephone);
+    }
+
+    /**
+     * 用户注册
+     */
+    @RequestMapping("register")
+    public ArkResult register(TUserInfo userInfo) {
+        return ssoService.register(userInfo);
     }
 
 }

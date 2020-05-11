@@ -7,28 +7,56 @@ layui.use(['form', 'layer', 'jquery', 'util'], function () {
     // 检查用户名是否重复
     $("#userName").blur(function () {
         var userName = this.value;
-        if (userName == '王京京') {
-            layer.tips('用户名重复', '#userName');
-        }
+        $.ajax({
+            url: "http://localhost:8083/sso/checkUserName",
+            type: "POST",
+            data: {userName: userName},
+            success: function (res) {
+                if (res.code === -1) {
+                    layer.tips('用户名重复', '#userName');
+                }
+            }
+        })
     });
 
     // 检查邮箱是否已经注册
     $("#email").blur(function () {
         var email = this.value;
-        if (email == '1624022009@qq.com') {
-            layer.tips('邮箱已注册', '#email');
-            this.value = "";
-        }
+        $.ajax({
+            url: "http://localhost:8083/sso/checkEmail",
+            type: "POST",
+            data: {email: email},
+            success: function (res) {
+                if (res.code === -1) {
+                    layer.tips('邮箱已注册', '#email');
+                }
+            }
+        })
     });
 
     // 检查手机号是否已经注册
-    $("#phone").blur(function () {
+    $("#telephone").blur(function () {
         var phone = this.value;
-        if (phone == '15188875022') {
-            layer.tips('手机号已注册', '#phone');
-            this.value = "";
-        }
+        $.ajax({
+            url: "http://localhost:8083/sso/checkTelephone",
+            type: "POST",
+            data: {telephone: phone},
+            success: function (res) {
+                if (res.code === -1) {
+                    layer.tips('手机号已注册', '#telephone');
+                }
+            }
+        })
     });
+
+    // 检查确认密码和密码是否相同
+    $("#password2").blur(function () {
+        let password2 = this.value;
+        let password = $("#password").val();
+        if (password2 !== password) {
+            layer.tips('重复密码不同', '#password2');
+        }
+    })
 
     $("#codeTip").click(function () {
         // 发送验证码
@@ -57,18 +85,21 @@ layui.use(['form', 'layer', 'jquery', 'util'], function () {
         // 发送验证码的方法
     }
 
-    $(".loginBody .seraph").click(function () {
-        layer.msg("这只是做个样式，至于功能，你见过哪个后台能这样登录的？还是老老实实的找管理员去注册吧", {
-            time: 5000
-        });
-    });
-
-    //登录按钮
-    form.on("submit(login)", function (data) {
+    //注册按钮
+    form.on("submit(register)", function (data) {
         $(this).text("登录中...").attr("disabled", "disabled").addClass("layui-disabled");
-        setTimeout(function () {
-            window.location.href = "/layuicms2.0";
-        }, 1000);
+        $.ajax({
+            url: "http://localhost:8083/sso/register",
+            type: "POST",
+            data: data.field,
+            success: function (res) {
+                layer.msg(res.msg);
+                if (res.code === 200) {
+                    location.href = "http://localhost:8081";
+                }
+            }
+        })
+
         return false;
     });
 

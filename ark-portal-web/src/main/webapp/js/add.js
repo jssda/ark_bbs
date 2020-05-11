@@ -171,7 +171,7 @@ layui.config({
                 top.layer.msg(res.msg);
                 layer.closeAll("iframe");
                 //刷新父页面
-                parent.location.reload();
+                parent.location = "/";
             },
             complete: function (xhr, ts) {
                 if ((xhr.status >= 300 && xhr.status < 400) && xhr.status != 304) {
@@ -185,11 +185,5 @@ layui.config({
 
         return false;
     });
-
-    /*    //预览
-        form.on("submit(look)", function () {
-            layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问");
-            return false;
-        });*/
 });
 

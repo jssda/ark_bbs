@@ -56,6 +56,7 @@ layui.config({
             }
         });
     }
+
     listPublic(1, 10);
     //执行一个laypage实例
     laypage.render({
@@ -86,7 +87,6 @@ layui.config({
                 layui.each(articleList, function (index, item) {
                     item.create = getTimeAge(item.create);
                 });
-                console.log(articleList);
                 let getTpl = $("#myCollectionTpl").html();
                 laytpl(getTpl).render(articleList, function (html) {
                     $("#myCollectionView").html(html);
@@ -102,6 +102,7 @@ layui.config({
             }
         });
     }
+
     listCollection(1, 10);
     //执行一个laypage实例
     laypage.render({
@@ -113,6 +114,22 @@ layui.config({
             listCollection(obj.curr, obj.limit);
         }
     });
+
+    // 取消收藏
+    $(document).on('click', "button[name=unCollection]", function () {
+        let colId = $(this).prev('span').text();
+        $.ajax({
+            url:"http://localhost:8081/portal/index/unCollection",
+            type:"GET",
+            data:{colId: colId},
+            success:function (res) {
+                layer.msg(res.msg);
+                if (res.code === 200) {
+                    location.reload();
+                }
+            }
+        })
+    })
 
 
     /*'yyyy-MM-dd HH-mm-ss'格式的字符串转日期*/
