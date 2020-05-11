@@ -26,4 +26,5 @@
     <dubbo:service interface="pers.jssd.ark.rpc.service.TSectionService" ref="TSectionServiceImpl"/>
     <dubbo:service interface="pers.jssd.ark.rpc.service.TCollectionService" ref="TCollectionServiceImpl"/>
     <dubbo:service interface="pers.jssd.ark.rpc.service.TMessageService" ref="TMessageServiceImpl"/>
+    <dubbo:service interface="pers.jssd.ark.rpc.service.TFollowService" ref="TFollowServiceImpl"/>
 </beans>

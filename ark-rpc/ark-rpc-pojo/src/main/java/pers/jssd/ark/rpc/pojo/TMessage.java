@@ -28,6 +28,25 @@ public class TMessage implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private TUserInfo fromUser;
+    private TUserInfo toUser;
+
+    public TUserInfo getFromUser() {
+        return fromUser;
+    }
+
+    public void setFromUser(TUserInfo fromUser) {
+        this.fromUser = fromUser;
+    }
+
+    public TUserInfo getToUser() {
+        return toUser;
+    }
+
+    public void setToUser(TUserInfo toUser) {
+        this.toUser = toUser;
+    }
+
     public Integer getMesId() {
         return mesId;
     }

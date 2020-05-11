@@ -106,4 +106,6 @@ public interface TArticleService {
      * @return 返回查询到的文章信息
      */
     PageInfo<TArticle> selectArticleByPageNumAndSecIdOrderByHot(PageNum pageNum, Integer secId);
+
+    PageInfo<TArticle> selectArticleByPageNumAndCreate(PageNum pageNum);
 }

@@ -30,11 +30,14 @@
             <mvc:mapping path="/portal/index/addArticle"/>
             <mvc:mapping path="/portal/index/listArticleByLoginUserIdAndPageNum"/>
             <mvc:mapping path="/portal/index/listCollectionByUserIdAndPageNum"/>
+            <mvc:mapping path="/portal/index/listMessageByUserId"/>
+            <mvc:mapping path="/portal/index/removeMes/**"/>
             <mvc:mapping path="/portal/index/getLoginUserInfo"/>
             <mvc:mapping path="/portal/index/modifyPass"/>
             <mvc:mapping path="/portal/index/modifyUserInfo"/>
             <mvc:mapping path="/portal/index/unCollection"/>
-<!--            <mvc:exclude-mapping path="/index/login"/>-->
+            <mvc:mapping path="/portal/index/followThis/**"/>
+            <!--<mvc:exclude-mapping path="/index/login"/>-->
             <bean class="pers.jssd.ark.portal.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

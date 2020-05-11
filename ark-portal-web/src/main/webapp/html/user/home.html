@@ -51,7 +51,7 @@
     <p class="fly-home-sign"> ({{d.userShow=="null"?"并没有什么介绍":d.userShow}}) </p>
     {{# if(d.isMe == null){ }}
     <div class="fly-sns" data-user="">
-        <a href="javascript:;" class="layui-btn layui-btn-primary fly-imActive" data-type="addFriend">关注</a>
+        <a href="javascript:;" lay-data="{{d.userId}}" class="layui-btn layui-btn-primary fly-imActive" id="followThis">关注</a>
     </div>
     {{# } }}
 </script>
@@ -71,7 +71,7 @@
 </script>
 
 <script src="http://localhost:8081/res/layui/layui.js"></script>
-<script src="http://localhost:8081/js/loadNav.js"></script>
+<script src="http://localhost:8081/js/user/loadNav.js"></script>
 <script src="http://localhost:8081/js/user/home.js"></script>
 
 </body>

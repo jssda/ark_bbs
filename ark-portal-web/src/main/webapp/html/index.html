@@ -22,6 +22,13 @@
             <div class="fly-panel">
                 <div id="articlePage" style="text-align: center"></div>
             </div>
+
+            <div id="recentArticleView"></div>
+            <div class="fly-panel">
+                <div id="recentArticlePage" style="text-align: center"></div>
+            </div>
+
+
         </div>
         <div class="layui-col-md4">
             <div id="rightBar"></div>
@@ -37,6 +44,51 @@
             <a>置顶</a>
         </div>
         <ul id="articleList" class="fly-list">
+            <!-- 如果没有文章信息, 提示没有文章-->
+            {{# if(d == null || d.length == 0) { }}
+            <div class="ark-none">没有数据</div>
+            {{# } else { }}
+            {{# layui.each(d, function(index, it){ }}
+
+            <li>
+                <a href="http://localhost:8081/html/user/home.html?userId={{it.user.userId}}" class="fly-avatar">
+                    <img src=" {{ it.user.userImg==null?'':it.user.userImg }} " alt=" {{ it.user.userName }} ">
+                </a>
+                <h2>
+                    <a class="layui-badge">{{ it.section.secTitle }}</a>
+                    <a href="http://localhost:8081/html/jie/detail.html?artId={{ it.artId }}">{{ it.artTitle }}</a>
+                </h2>
+                <div class="fly-list-info">
+                    <a href="user/home.html" link>
+                        <cite>{{ it.user.userName }}</cite>
+                        {{# if(it.user.userLevel == 1) { }}
+                        <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：会员">会员</i>
+                        {{# } else if(it.user.userLevel == 2) { }}
+                        <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：管理员">管理员</i>
+                        {{# } }}
+                    </a>
+                    <span>{{ it.create }}</span>
+                    <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="回答"></i> {{ it.commentCount }}</span>
+                </div>
+                <div class="fly-list-badge">
+                    {{# if(it.isTop == 1 ){ }}
+                    <span class="layui-badge layui-bg-black">置顶</span>
+                    {{# }}}
+                </div>
+            </li>
+
+            {{# }) }}
+            {{# } }}
+        </ul>
+    </div>
+</script>
+
+<script type="text/html" id="recentArticleTpl">
+    <div class="fly-panel">
+        <div class="fly-panel-title fly-filter">
+            <a>最近发布</a>
+        </div>
+        <ul class="fly-list">
             <!-- 如果没有文章信息, 提示没有文章-->
             {{# if(d == null || d.length == 0) { }}
             <div class="ark-none">没有数据</div>

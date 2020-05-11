@@ -1,6 +1,7 @@
 pers\jssd\ark\rpc\service\TArticleService.class
 pers\jssd\ark\rpc\service\TCommentService.class
-pers\jssd\ark\rpc\service\TCollectionService.class
+pers\jssd\ark\rpc\service\TFollowService.class
 pers\jssd\ark\rpc\service\TSectionService.class
 pers\jssd\ark\rpc\service\TMessageService.class
+pers\jssd\ark\rpc\service\TCollectionService.class
 pers\jssd\ark\rpc\service\TUserInfoService.class

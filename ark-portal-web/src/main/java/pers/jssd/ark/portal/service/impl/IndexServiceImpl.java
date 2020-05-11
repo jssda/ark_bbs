@@ -28,15 +28,17 @@ public class IndexServiceImpl implements IndexService {
     private final TCommentService commentService;
     private final TMessageService messageService;
     private final TCollectionService collectionService;
+    private final TFollowService followService;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    public IndexServiceImpl(TSectionService sectionService, TArticleService articleService, TUserInfoService userInfoService, TCommentService commentService, TMessageService messageService, TCollectionService collectionService) {
+    public IndexServiceImpl(TSectionService sectionService, TArticleService articleService, TUserInfoService userInfoService, TCommentService commentService, TMessageService messageService, TCollectionService collectionService, TFollowService followService) {
         this.sectionService = sectionService;
         this.articleService = articleService;
         this.userInfoService = userInfoService;
         this.commentService = commentService;
         this.messageService = messageService;
         this.collectionService = collectionService;
+        this.followService = followService;
     }
 
     @Override
@@ -536,6 +538,108 @@ public class IndexServiceImpl implements IndexService {
                 arkResult = new ArkResult(-1, "删除失败");
             } else {
                 arkResult = new ArkResult(200, "删除成功");
+            }
+        }
+
+        return arkResult;
+    }
+
+    @Override
+    public PageResult listArticleByCreate(Integer page, Integer limit) {
+        PageResult pageResult = null;
+        PageNum pageNum = PageUtil.getPageNum(page, limit);
+        PageInfo<TArticle> articlePageInfo = articleService.selectArticleByPageNumAndCreate(pageNum);
+        if (articlePageInfo != null && articlePageInfo.getSize() != 0) {
+            pageResult = new PageResult();
+            pageResult.setCode(200);
+            pageResult.setCount((int) articlePageInfo.getTotal());
+            pageResult.setSize(articlePageInfo.getSize());
+            pageResult.setData(articlePageInfo.getList());
+            pageResult.setMsg("查询成功");
+        } else {
+            pageResult = new PageResult();
+            pageResult.setMsg("查询失败");
+            pageResult.setCount(-1);
+        }
+
+        return pageResult;
+    }
+
+    @Override
+    public ArkResult listMessageByUserId(TUserInfo loginUser) {
+        ArkResult arkResult = null;
+        if (loginUser == null) {
+            arkResult = new ArkResult(-1, "用户未登录");
+        } else {
+            Integer userId = loginUser.getUserId();
+            List<TMessage> messages = messageService.selectMessageByUserId(userId);
+            if (messages != null && messages.size() != 0) {
+                arkResult = new ArkResult(200, "信息查询成功");
+                arkResult.setData(messages);
+            } else {
+                arkResult = new ArkResult(-1, "信息查询失败");
+            }
+        }
+
+        return arkResult;
+    }
+
+    @Override
+    public ArkResult removeMes(Integer mesId) {
+        ArkResult arkResult = null;
+        if (mesId == null) {
+            arkResult = new ArkResult(-1, "删除失败");
+        } else {
+            int i = messageService.deleteMessage(mesId);
+            if (i == 0) {
+                arkResult = new ArkResult(-1, "删除失败");
+            } else {
+                arkResult = new ArkResult(200, "删除成功");
+            }
+        }
+
+        return arkResult;
+    }
+
+    @Override
+    public ArkResult followThis(TUserInfo loginUser, Integer userId) {
+        ArkResult arkResult = null;
+        if (loginUser == null || userId == null) {
+            arkResult = new ArkResult(-1, "关注失败");
+        } else {
+            Integer loginUserId = loginUser.getUserId();
+            int i = followService.addFollow(loginUserId, userId);
+            if (i == 0) {
+                arkResult = new ArkResult(-1, "关注失败");
+            } else {
+                arkResult = new ArkResult(200, "关注成功");
+                // 添加关注信息
+                TMessage message = new TMessage();
+                message.setMesTitle("关注信息");
+                message.setFromUserId(loginUser.getUserId());
+                message.setToUserId(userId);
+                message.setMesType("0");
+                message.setMesState("0");
+                message.setCreate(new Date());
+                messageService.insertMessage(message);
+            }
+        }
+
+        return arkResult;
+    }
+
+    @Override
+    public ArkResult isFollow(TUserInfo loginUser, Integer userId) {
+        ArkResult arkResult = null;
+        if (loginUser == null || userId == null) {
+            arkResult = new ArkResult(-1, "用户未登录");
+        } else {
+            Integer loginUserId = loginUser.getUserId();
+            boolean flag = followService.isFollow(loginUserId, userId);
+            if (flag) {
+                arkResult = new ArkResult(200);
+            } else {
+                arkResult = new ArkResult(-1, "用户未关注");
             }
         }
 

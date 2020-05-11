@@ -28,4 +28,6 @@ public interface TMessageMapper {
     int updateByPrimaryKeySelective(TMessage record);
 
     int updateByPrimaryKey(TMessage record);
+
+    List<TMessage> selectMessageByUserId(Integer userId);
 }

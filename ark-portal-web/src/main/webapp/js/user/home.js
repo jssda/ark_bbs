@@ -29,7 +29,20 @@ layui.config({
                 async: false,
                 success: function (res) {
                     data = res.data;
-                    data.isMe = null;
+                    let loginUserId = JSON.parse($.cookie("userInfo")).userId;
+                    if (loginUserId === data.userId) {
+                        data.isMe = 1;
+                    } else {
+                        data.isMe = null;
+                    }
+                    $.ajax({
+                        url:"http://localhost:8081/portal/index/isFollow/" + data.userId,
+                        success:function (res) {
+                            if (res.code == 200) {
+                                data.isMe = 1;
+                            }
+                        }
+                    })
                 }
             })
         } else {
@@ -68,6 +81,25 @@ layui.config({
             })
         }
     })()
+
+    // 添加关注
+    $(document).on('click', '#followThis', function () {
+        let userId = $(this).attr("lay-data");
+        $.ajax({
+            url:"http://localhost:8081/portal/index/followThis/" + userId,
+            success:function (res) {
+                layer.msg(res.msg);
+            },
+            complete: function (xhr, ts) {
+                if ((xhr.status >= 300 && xhr.status < 400) && xhr.status !== 304) {
+                    //重定向网址在响应头中，取出再执行跳转
+                    let redirectUrl = xhr.getResponseHeader('redirectUrl');
+                    let localUrl = location.href;
+                    location.href = redirectUrl + '?redirectUrl=' + localUrl;
+                }
+            }
+        })
+    })
 
     /*'yyyy-MM-dd HH-mm-ss'格式的字符串转日期*/
     function stringToDate(str) {

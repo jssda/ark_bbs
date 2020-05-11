@@ -158,4 +158,29 @@ public interface IndexService {
      * 删除指定的文章
      */
     ArkResult delThis(Integer artId);
+
+    /**
+     * 分页列出最近的文章信息
+     */
+    PageResult listArticleByCreate(Integer page, Integer limit);
+
+    /**
+     * 查询;用户未读消息
+     */
+    ArkResult listMessageByUserId(TUserInfo loginUser);
+
+    /**
+     * 删除一个消息
+     */
+    ArkResult removeMes(Integer mesId);
+
+    /**
+     * 添加一个关注用户
+     */
+    ArkResult followThis(TUserInfo loginUser, Integer userId);
+
+    /**
+     * 查看是否被关注
+     */
+    ArkResult isFollow(TUserInfo loginUser, Integer userId);
 }

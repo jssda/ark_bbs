@@ -26,6 +26,7 @@ layui.config({
     $("#rightBar").load("http://localhost:8081/html/common/right-bar.html");
 
     let articleCount;
+    let recentCount;
 
     // 查询板块和板块中的数据, 渲染进页面
     function listSection(page, limit) {
@@ -57,8 +58,48 @@ layui.config({
         , count: articleCount //数据总数，从服务端得到
         , limit: 5
         , jump: function (obj, first) {
-            // 分页查询板块信息
-            listSection(obj.curr, obj.limit);
+            if (!first) {
+                // 分页查询板块信息
+                listSection(obj.curr, obj.limit);
+            }
+        }
+    });
+
+
+    // 查询板块和板块中的数据, 渲染进页面
+    function listRecent(page, limit) {
+        $.ajax({
+            url: "http://localhost:8081/portal/index/listArticleByCreate",
+            data: {
+                page: page,
+                limit: limit
+            },
+            async: false,
+            success: function (res) {
+                let articleList = res.data;
+                recentCount = res.count;
+                layui.each(articleList, function (index, item) {
+                    item.create = getTimeAge(item.create);
+                })
+                let getTpl = $("#recentArticleTpl").html();
+                laytpl(getTpl).render(articleList, function (html) {
+                    $("#recentArticleView").html(html);
+                });
+            }
+        })
+    }
+
+    listRecent(1, 8);
+    //执行一个laypage实例
+    laypage.render({
+        elem: 'recentArticlePage' //注意，这里的 test1 是 ID，不用加 # 号
+        , count: recentCount //数据总数，从服务端得到
+        , limit: 8
+        , jump: function (obj, first) {
+            if (!first) {
+                // 分页查询板块信息
+                listRecent(obj.curr, obj.limit);
+            }
         }
     });
 

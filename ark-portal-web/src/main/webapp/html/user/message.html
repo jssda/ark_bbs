@@ -1,51 +1,73 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>我的消息</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="fly,layui,前端社区">
-  <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
-  <link rel="stylesheet" href="../../res/layui/css/layui.css">
-  <link rel="stylesheet" href="../../res/css/global.css">
+    <meta charset="utf-8">
+    <title>我的消息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="fly,layui,前端社区">
+    <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
+    <link rel="stylesheet" href="../../res/layui/css/layui.css">
+    <link rel="stylesheet" href="../../res/css/global.css">
 </head>
 <body>
 
 <div id="header"></div>
 
 <div class="layui-container fly-marginTop fly-user-main">
-  <div id="user_nav"></div>
+    <div id="user_nav"></div>
 
-  <div class="fly-panel fly-panel-user" pad20>
-	  <div class="layui-tab layui-tab-brief" lay-filter="user" id="LAY_msg" style="margin-top: 15px;">
-	    <button class="layui-btn layui-btn-danger" id="LAY_delallmsg">清空全部消息</button>
-	    <div  id="LAY_minemsg" style="margin-top: 10px;">
-        <!--<div class="fly-none">您暂时没有最新消息</div>-->
-        <ul class="mine-msg">
-          <li data-id="123">
-            <blockquote class="layui-elem-quote">
-              <a href="/jump?username=Absolutely" target="_blank"><cite>Absolutely</cite></a>回答了您的求解<a target="_blank" href="/jie/8153.html/page/0/#item-1489505778669"><cite>layui后台框架</cite></a>
-            </blockquote>
-            <p><span>1小时前</span><a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a></p>
-          </li>
-          <li data-id="123">
-            <blockquote class="layui-elem-quote">
-              系统消息：欢迎使用 layui
-            </blockquote>
-            <p><span>1小时前</span><a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a></p>
-          </li>
-        </ul>
-      </div>
-	  </div>
-	</div>
+    <div class="fly-panel fly-panel-user" pad20>
+        <div class="layui-tab layui-tab-brief" lay-filter="user" id="LAY_msg" style="margin-top: 15px;">
+            <!--<button class="layui-btn layui-btn-danger" id="LAY_delallmsg">清空全部消息</button>-->
+            <div id="messageView"></div>
+        </div>
+    </div>
 
 </div>
 
 <div id="footer"></div>
 
-<script src="../../res/layui/layui.js"></script>
-<script src="http://localhost:8081/js/loadNav.js"></script>
+<script type="text/html" id="messageTpl">
+    <div id="LAY_minemsg" style="margin-top: 10px;">
+        {{# if(JSON.stringify(d)==="{}"){ }}
+        <!-- 无数据时 -->
+        <div class="ark-none">没有相关数据</div>
+        {{# } else { }}
+        <ul>
+            {{# layui.each(d, function(index, item){ }}
+            <li data-id="{{ item.mesId }}">
+                <blockquote class="layui-elem-quote">
+                    {{# if(item.mesTitle=='评论信息'){ }}
+                    <a class="fly-link" href="http://localhost:8081/html/user/home.html?userId={{ item.fromUserId }}"
+                       target="_blank">
+                        <cite>{{ item.fromUser.userName }}</cite>
+                    </a>
+                    评论了您的帖子
+                    <a class="fly-link" target="_blank"
+                       href="http://localhost:8081/html/jie/detail.html?artId={{ item.article.artId }}">
+                        <cite>{{ item.article.artTitle }}</cite>
+                    </a>
+                    {{# }else { }}
+                    <a class="fly-link" href="http://localhost:8081/html/user/home.html?userId={{ item.fromUserId }}"
+                       target="_blank">
+                        <cite>{{ item.fromUser.userName }}</cite>
+                    </a>
+                    关注了您
+                    {{# } }}
+                    <span>{{ item.create }}</span>
+                    <a name="delMes" lay-data="{{item.mesId}}" class="layui-btn layui-btn-small layui-btn-danger">删除</a>
+                </blockquote>
+            </li>
+            {{# }) }}
+        </ul>
+        {{# } }}
+    </div>
+</script>
+
+<script src="http://localhost:8081/res/layui/layui.js"></script>
+<script src="http://localhost:8081/js/user/loadNav.js"></script>
+<script src="http://localhost:8081/js/user/message.js"></script>
+
 
 </body>
 </html>

@@ -278,4 +278,44 @@ public class IndexController {
         return indexService.unCollection(loginUser, colId);
     }
 
+    /**
+     * 分页列出最近的文章
+     */
+    @RequestMapping("listArticleByCreate")
+    public PageResult listArticleByCreate(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "5") Integer limit) {
+        return indexService.listArticleByCreate(page, limit);
+    }
+
+    /**
+     * 查询用户消息
+     */
+    @RequestMapping("listMessageByUserId")
+    public ArkResult listMessageByUserId(@RequestAttribute TUserInfo loginUser) {
+        return indexService.listMessageByUserId(loginUser);
+    }
+
+    /**
+     * 删除一个信息
+     */
+    @RequestMapping("removeMes/{mesId}")
+    public ArkResult removeMes(@PathVariable Integer mesId) {
+        return indexService.removeMes(mesId);
+    }
+
+    /**
+     * 关注
+     */
+    @RequestMapping("followThis/{userId}")
+    public ArkResult followThis(@RequestAttribute TUserInfo loginUser, @PathVariable Integer userId) {
+        return indexService.followThis(loginUser, userId);
+    }
+
+    /**
+     * 查看是否呗关注
+     */
+    @RequestMapping("isFollow/{userId}")
+    public ArkResult isFollow(@RequestAttribute TUserInfo loginUser, @PathVariable Integer userId) {
+        return indexService.isFollow(loginUser, userId);
+    }
+
 }

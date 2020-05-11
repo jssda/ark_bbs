@@ -327,9 +327,9 @@ layui.config({
     let secId = layui.url().search.secId;
     // 查询评论最多的10篇文章
     $.ajax({
-        url:"http://localhost:8081/portal/index/mostCommentBySecId",
-        data:{secId: secId},
-        success:function (res) {
+        url: "http://localhost:8081/portal/index/mostCommentBySecId",
+        data: {secId: secId},
+        success: function (res) {
             let data = res.data;
             if (data == null) {
                 data = {}

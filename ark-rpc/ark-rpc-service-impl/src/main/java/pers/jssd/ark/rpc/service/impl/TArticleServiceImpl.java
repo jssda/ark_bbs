@@ -321,6 +321,20 @@ public class TArticleServiceImpl implements TArticleService {
     }
 
     @Override
+    public PageInfo<TArticle> selectArticleByPageNumAndCreate(PageNum pageNum) {
+        PageHelper.startPage(pageNum.getPage(), pageNum.getLimit());
+        TArticleExample articleExample = new TArticleExample();
+        articleExample.setOrderByClause("`create` desc");
+        List<TArticle> tArticles = articleMapper.selectByExample(articleExample);
+
+        getUserInfo(tArticles.toArray(new TArticle[0]));
+        getSection(tArticles.toArray(new TArticle[0]));
+        getCommentCount(tArticles.toArray(new TArticle[0]));
+
+        return new PageInfo<>(tArticles);
+    }
+
+    @Override
     public TArticle selectArticleByArtId(Integer artId) {
         TArticle article = articleMapper.selectByPrimaryKey(artId);
 
