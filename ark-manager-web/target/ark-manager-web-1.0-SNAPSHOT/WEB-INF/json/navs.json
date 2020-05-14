@@ -11,33 +11,6 @@
 			"icon": "icon-text",
 			"href": "page/section/sectionList.html",
 			"spread": false
-		},
-		{
-			"title": "图片管理",
-			"icon": "&#xe634;",
-			"href": "page/img/images.html",
-			"spread": false
-		},
-		{
-			"title": "其他页面",
-			"icon": "&#xe630;",
-			"href": "",
-			"spread": false,
-			"children": [
-				{
-					"title": "404页面",
-					"icon": "&#xe61c;",
-					"href": "page/404.html",
-					"spread": false
-				},
-				{
-					"title": "登录",
-					"icon": "&#xe609;",
-					"href": "page/login/login.html",
-					"spread": false,
-					"target": "_blank"
-				}
-			]
 		}
 	],
 	"memberCenter": [
@@ -65,6 +38,14 @@
 			"title": "多级评论列表",
 			"icon": "icon-text",
 			"href": "page/comment/commentMultiList.html",
+			"spread": false
+		}
+	],
+	"messageManagement": [
+		{
+			"title": "站内信息列表",
+			"icon": "icon-text",
+			"href": "page/message/messageList.html",
 			"spread": false
 		}
 	]

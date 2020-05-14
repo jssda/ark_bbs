@@ -1,9 +1,13 @@
 package pers.jssd.ark.rpc.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
+import pers.jssd.ark.beans.PageNum;
 import pers.jssd.ark.rpc.mapper.TMessageMapper;
 import pers.jssd.ark.rpc.mapper.TUserInfoMapper;
 import pers.jssd.ark.rpc.pojo.TMessage;
+import pers.jssd.ark.rpc.pojo.TMessageExample;
 import pers.jssd.ark.rpc.pojo.TUserInfo;
 import pers.jssd.ark.rpc.service.TMessageService;
 
@@ -41,6 +45,15 @@ public class TMessageServiceImpl implements TMessageService {
     @Override
     public int deleteMessage(Integer mesId) {
         return messageMapper.deleteByPrimaryKey(mesId);
+    }
+
+    @Override
+    public PageInfo<TMessage> selectMessageByPageNum(PageNum pageNum) {
+        PageHelper.startPage(pageNum.getPage(), pageNum.getLimit());
+        TMessageExample messageExample = new TMessageExample();
+        List<TMessage> messages = messageMapper.selectByExample(messageExample);
+
+        return new PageInfo<>(messages);
     }
 
     /**

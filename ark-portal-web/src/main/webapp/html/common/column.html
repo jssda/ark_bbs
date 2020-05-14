@@ -3,7 +3,7 @@
         <ul class="layui-clear" id="secView"></ul>
 
         <div class="fly-column-right layui-hide-xs">
-            <span class="fly-search"><i class="layui-icon"></i></span>
+            <span class="fly-search" id="search"><i class="layui-icon"></i></span>
             <a href="http://localhost:8081/html/jie/add.html" class="layui-btn">发表新帖</a>
         </div>
         <div class="layui-hide-sm layui-show-xs-block"
@@ -16,7 +16,8 @@
 <script type="text/html" id="secTpl">
     <li id="index" class="layui-hide-xs"><a href="/">首页</a></li>
     {{# layui.each(d, function(index, item){ }}
-    <li id="sec{{item.secId}}"><a href="http://localhost:8081/html/jie/section.html?secId={{ item.secId }}">{{ item.secTitle }}</a></li>
+    <li id="sec{{item.secId}}"><a href="http://localhost:8081/html/jie/section.html?secId={{ item.secId }}">{{
+        item.secTitle }}</a></li>
     {{# }) }}
 
     <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>

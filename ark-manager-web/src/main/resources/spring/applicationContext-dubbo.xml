@@ -20,4 +20,5 @@
     <dubbo:reference interface="pers.jssd.ark.rpc.service.TCommentService" id="commentService"/>
     <dubbo:reference interface="pers.jssd.ark.rpc.service.TSectionService" id="sectionService"/>
     <dubbo:reference interface="pers.jssd.ark.rpc.service.TCollectionService" id="collectionService"/>
+    <dubbo:reference interface="pers.jssd.ark.rpc.service.TMessageService" id="messageService"/>
 </beans>

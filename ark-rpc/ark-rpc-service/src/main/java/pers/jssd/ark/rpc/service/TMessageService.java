@@ -1,5 +1,7 @@
 package pers.jssd.ark.rpc.service;
 
+import com.github.pagehelper.PageInfo;
+import pers.jssd.ark.beans.PageNum;
 import pers.jssd.ark.rpc.pojo.TMessage;
 
 import java.util.List;
@@ -22,4 +24,6 @@ public interface TMessageService {
      * 删除一个信息
      */
     int deleteMessage(Integer mesId);
+
+    PageInfo<TMessage> selectMessageByPageNum(PageNum pageNum);
 }

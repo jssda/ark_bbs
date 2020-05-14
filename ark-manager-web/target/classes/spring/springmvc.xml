@@ -22,6 +22,15 @@
         <property name="maxUploadSize" value="10000000"/>
     </bean>
 
+    <!--拦截器配置-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/>
+            <!--<mvc:exclude-mapping path="/index/login"/>-->
+            <bean class="pers.jssd.ark.manager.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
     <!-- 视图解析器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"/><!-- jsp所在的前缀-->
