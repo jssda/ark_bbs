@@ -84,7 +84,7 @@
                         <dd pc><a href="javascript:;" class="changeSkin"><i
                                 class="layui-icon">&#xe61b;</i><cite>更换皮肤</cite></a></dd>
                         <dd>
-                            <a href="../page/login/login.html" class="signOut">
+                            <a href="http://localhost:8083/html/login/login.html?redirectUrl=http://localhost:8080" class="signOut">
                                 <i class="seraph icon-tuichu"></i>
                                 <cite>退出</cite>
                             </a>

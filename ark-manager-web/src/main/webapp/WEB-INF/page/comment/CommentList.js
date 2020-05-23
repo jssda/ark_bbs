@@ -72,7 +72,7 @@ layui.config({
         var index = layui.layer.open({
             title: '添加新的评论内容',
             type: 2,
-            content: "commentAdd.html",area: ['800px', '500px'],
+            content: "commentAdd.html", area: ['800px', '500px'],
             success: function (layero, index) {
                 setTimeout(function () {
                     layui.layer.tips('点击此处返回评论列表', '.layui-layer-setwin .layui-layer-close', {
